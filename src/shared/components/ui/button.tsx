@@ -4,6 +4,14 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/shared/utils/utils";
 
+/**
+ * Button variant styles configuration.
+ *
+ * This configuration defines all available button variants and sizes
+ * with proper styling for different use cases and states.
+ *
+ * @constant buttonVariants
+ */
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
@@ -36,6 +44,20 @@ const buttonVariants = cva(
   },
 );
 
+/**
+ * Button component for interactive actions.
+ *
+ * This component provides a flexible button with multiple variants and sizes,
+ * support for icons, and proper accessibility features. It can render as a button
+ * or as a child component using the asChild prop.
+ *
+ * @param props - The component props
+ * @param props.className - Additional CSS classes
+ * @param props.variant - Button variant (default, destructive, outline, secondary, ghost, link)
+ * @param props.size - Button size (default, sm, lg, icon, icon-sm, icon-lg)
+ * @param props.asChild - Whether to render as a child component
+ * @returns JSX element representing the button
+ */
 function Button({
   className,
   variant,

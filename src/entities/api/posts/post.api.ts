@@ -2,10 +2,14 @@ import { http } from "@/shared/lib/utils/fetcher";
 import { IPostsResponse } from "@/shared/interfaces";
 
 /**
- * Parameters for fetching posts with pagination
+ * Parameters for fetching posts with pagination support.
+ *
+ * @interface IGetPostsParams
  */
 export interface IGetPostsParams {
+  /** The page number to fetch (1-based indexing) */
   page?: number;
+  /** The number of posts per page */
   limit?: number;
 }
 
@@ -16,8 +20,8 @@ export interface IGetPostsParams {
  * with automatic authentication handling through cookies and pagination support.
  *
  * @param params - Optional pagination parameters
- * @returns Promise that resolves to posts response data
- * @throws Throws an error if the API request fails
+ * @returns Promise that resolves to posts response data with pagination metadata
+ * @throws {Error} Throws an error if the API request fails
  */
 export const getPosts = async (
   params?: IGetPostsParams,

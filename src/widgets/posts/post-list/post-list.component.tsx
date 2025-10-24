@@ -8,13 +8,13 @@ import { Button } from "@/shared/components/ui/button";
 import { useCallback } from "react";
 
 /**
- * PostList component for displaying posts with infinite scroll
+ * PostList component for displaying posts with infinite scroll.
  *
  * This component fetches posts using TanStack Query infinite query and displays them
  * in a grid layout. It handles loading and error states, includes the ability to create new posts,
  * and provides infinite scroll functionality with a "Load More" button.
  *
- * @returns PostList component
+ * @returns JSX element representing the post list with infinite scroll functionality
  */
 export const PostList = () => {
   const {

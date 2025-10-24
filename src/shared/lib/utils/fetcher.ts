@@ -9,6 +9,8 @@ import ky from "ky";
  *
  * On the server side, cookies are automatically forwarded from the request.
  * On the client side, cookies are included automatically by the browser.
+ *
+ * @constant http
  */
 export const http = ky.create({
   prefixUrl: "/api",

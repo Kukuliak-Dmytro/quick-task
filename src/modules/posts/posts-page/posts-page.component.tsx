@@ -10,7 +10,7 @@ import { PostList } from "@/widgets/posts";
  * with full functionality. It orchestrates the PostList widget and provides
  * hydration boundary for optimal performance with infinite query support.
  *
- * @returns The posts page component
+ * @returns Promise that resolves to JSX element representing the posts page
  */
 export const PostsPageComponent = async () => {
   const queryClient = getQueryClient();

@@ -5,6 +5,18 @@ import * as SeparatorPrimitive from "@radix-ui/react-separator";
 
 import { cn } from "@/shared/utils/utils";
 
+/**
+ * Separator component for visual content separation.
+ *
+ * This component provides a visual separator between content sections with
+ * support for horizontal and vertical orientations and accessibility features.
+ *
+ * @param props - The component props
+ * @param props.className - Additional CSS classes
+ * @param props.orientation - Separator orientation (horizontal or vertical)
+ * @param props.decorative - Whether the separator is decorative
+ * @returns JSX element representing the separator
+ */
 function Separator({
   className,
   orientation = "horizontal",

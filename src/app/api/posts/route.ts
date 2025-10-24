@@ -7,11 +7,16 @@ import { headers } from "next/headers";
 
 /**
  * GET /api/posts
- * Fetches posts from the database with pagination support
- * Requires authentication
+ * Fetches posts from the database with pagination support.
  *
- * @param request - The incoming request with search params
- * @returns JSON response with posts array, pagination info, and total count
+ * This endpoint retrieves posts with pagination support, including author information
+ * via database joins. Requires authentication and supports query parameters for
+ * page and limit customization.
+ *
+ * @param request - The incoming request with search params for pagination
+ * @returns JSON response with posts array, pagination metadata, and total count
+ * @throws {401} Unauthorized if no valid session
+ * @throws {500} Internal server error if database operation fails
  */
 export async function GET(request: Request) {
   try {
@@ -85,10 +90,17 @@ export async function GET(request: Request) {
 
 /**
  * POST /api/posts
- * Creates a new post
- * Requires authentication
+ * Creates a new post.
  *
- * @returns JSON response with the created post
+ * This endpoint creates a new post with the provided title, content, and publication
+ * status. Requires authentication and validates required fields before creation.
+ * Returns the created post with author information.
+ *
+ * @param request - The incoming request with post data in JSON body
+ * @returns JSON response with the created post including author information
+ * @throws {401} Unauthorized if no valid session
+ * @throws {400} Bad request if required fields are missing
+ * @throws {500} Internal server error if database operation fails
  */
 export async function POST(request: Request) {
   try {

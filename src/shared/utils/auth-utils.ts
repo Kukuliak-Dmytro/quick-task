@@ -3,9 +3,15 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 /**
- * Validates user session and redirects to login if not authenticated
+ * Validates user session and redirects to login if not authenticated.
+ *
+ * This function checks if the user has a valid session and redirects to the
+ * specified path if not authenticated. Used for protecting routes that require
+ * authentication.
+ *
  * @param redirectTo - Optional redirect path (defaults to "/login")
- * @returns Promise<Session> - The authenticated session
+ * @returns Promise that resolves to the authenticated session
+ * @throws {Redirect} Redirects to login page if not authenticated
  */
 export const requireAuth = async (redirectTo: string = "/login") => {
   const session = await auth.api.getSession({
@@ -20,8 +26,12 @@ export const requireAuth = async (redirectTo: string = "/login") => {
 };
 
 /**
- * Gets the current session without redirecting
- * @returns Promise<Session | null> - The session or null if not authenticated
+ * Gets the current session without redirecting.
+ *
+ * This function retrieves the current user session without performing any
+ * redirects. Useful for conditional rendering based on authentication status.
+ *
+ * @returns Promise that resolves to the session or null if not authenticated
  */
 export const getSession = async () => {
   const session = await auth.api.getSession({

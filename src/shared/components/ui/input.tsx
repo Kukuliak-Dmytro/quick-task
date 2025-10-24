@@ -2,6 +2,17 @@ import * as React from "react";
 
 import { cn } from "@/shared/utils/utils";
 
+/**
+ * Input component for form text inputs.
+ *
+ * This component provides a styled input element with proper focus states,
+ * validation styling, and accessibility features for form inputs.
+ *
+ * @param props - The component props
+ * @param props.className - Additional CSS classes
+ * @param props.type - Input type (text, email, password, etc.)
+ * @returns JSX element representing the input
+ */
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   return (
     <input

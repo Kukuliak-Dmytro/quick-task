@@ -13,6 +13,15 @@ import {
 } from "@/shared/components/ui/dropdown-menu";
 import { useEffect, useState } from "react";
 
+/**
+ * ModeToggle component for theme switching.
+ *
+ * This component provides a dropdown menu for users to switch between light, dark,
+ * and system themes. It includes proper hydration handling to prevent SSR mismatches
+ * and smooth transitions between theme states.
+ *
+ * @returns JSX element representing the theme toggle dropdown
+ */
 export function ModeToggle() {
   const { setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);

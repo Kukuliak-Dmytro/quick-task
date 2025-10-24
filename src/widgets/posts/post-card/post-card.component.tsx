@@ -8,15 +8,26 @@ import {
   AccordionTrigger,
 } from "@/shared/components/ui/accordion";
 
+/**
+ * Props interface for the PostCard component.
+ *
+ * @interface IPostCardProps
+ */
 interface IPostCardProps {
+  /** The post object to display */
   post: IPost;
 }
 
 /**
- * PostCard component for displaying a single post with accordion for full content
+ * PostCard component for displaying a single post with accordion for full content.
  *
- * @param post - Post object to display
- * @returns PostCard component
+ * This component renders a post card with a collapsible accordion that shows
+ * a truncated preview of the content and allows users to expand to see the full text.
+ * The component includes post metadata such as author, date, and publication status.
+ *
+ * @param props - The component props
+ * @param props.post - The post object containing all post data and metadata
+ * @returns JSX element representing the post card
  */
 export const PostCard = ({ post }: IPostCardProps) => {
   // Format date to readable string

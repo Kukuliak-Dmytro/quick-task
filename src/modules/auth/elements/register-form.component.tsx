@@ -8,6 +8,16 @@ import { Field, FieldError, FieldLabel } from "@/shared/components/ui/field";
 import { useState } from "react";
 import { signUp } from "../auth.service";
 
+/**
+ * RegisterForm component for user registration.
+ *
+ * This component provides a form for new users to create an account with their name,
+ * email, and password. It includes form validation using React Hook Form and Zod,
+ * error handling, and loading states. The form automatically redirects users after
+ * successful registration.
+ *
+ * @returns JSX element representing the registration form
+ */
 export const RegisterForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

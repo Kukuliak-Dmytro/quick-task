@@ -7,6 +7,16 @@ import { cn } from "@/shared/utils/utils";
 import { Label } from "@/shared/components/ui/label";
 import { Separator } from "@/shared/components/ui/separator";
 
+/**
+ * FieldSet component for grouping form fields.
+ *
+ * This component provides a fieldset wrapper for grouping related form fields
+ * with proper spacing and layout management.
+ *
+ * @param props - The component props
+ * @param props.className - Additional CSS classes
+ * @returns JSX element representing the fieldset
+ */
 function FieldSet({ className, ...props }: React.ComponentProps<"fieldset">) {
   return (
     <fieldset
@@ -22,6 +32,17 @@ function FieldSet({ className, ...props }: React.ComponentProps<"fieldset">) {
   );
 }
 
+/**
+ * FieldLegend component for form field legends.
+ *
+ * This component provides a legend element for form fields with different
+ * styling variants for legend and label appearances.
+ *
+ * @param props - The component props
+ * @param props.className - Additional CSS classes
+ * @param props.variant - Styling variant (legend or label)
+ * @returns JSX element representing the legend
+ */
 function FieldLegend({
   className,
   variant = "legend",
@@ -42,6 +63,16 @@ function FieldLegend({
   );
 }
 
+/**
+ * FieldGroup component for grouping related form fields.
+ *
+ * This component provides a container for grouping related form fields
+ * with proper spacing and layout management.
+ *
+ * @param props - The component props
+ * @param props.className - Additional CSS classes
+ * @returns JSX element representing the field group
+ */
 function FieldGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -80,6 +111,17 @@ const fieldVariants = cva(
   },
 );
 
+/**
+ * Field component for form field containers.
+ *
+ * This component provides a flexible container for form fields with different
+ * orientation options (vertical, horizontal, responsive) and proper styling.
+ *
+ * @param props - The component props
+ * @param props.className - Additional CSS classes
+ * @param props.orientation - Field orientation (vertical, horizontal, responsive)
+ * @returns JSX element representing the field container
+ */
 function Field({
   className,
   orientation = "vertical",
@@ -96,6 +138,16 @@ function Field({
   );
 }
 
+/**
+ * FieldContent component for form field content containers.
+ *
+ * This component provides a container for form field content with proper
+ * spacing and layout management.
+ *
+ * @param props - The component props
+ * @param props.className - Additional CSS classes
+ * @returns JSX element representing the field content container
+ */
 function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -109,6 +161,16 @@ function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
+/**
+ * FieldLabel component for form field labels.
+ *
+ * This component provides a label element for form fields with proper
+ * styling and accessibility features.
+ *
+ * @param props - The component props
+ * @param props.className - Additional CSS classes
+ * @returns JSX element representing the field label
+ */
 function FieldLabel({
   className,
   ...props
@@ -132,6 +194,16 @@ function FieldLabel({
   );
 }
 
+/**
+ * FieldTitle component for form field titles.
+ *
+ * This component provides a title element for form fields with proper
+ * styling and typography.
+ *
+ * @param props - The component props
+ * @param props.className - Additional CSS classes
+ * @returns JSX element representing the field title
+ */
 function FieldTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -146,6 +218,16 @@ function FieldTitle({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
+/**
+ * FieldDescription component for form field descriptions.
+ *
+ * This component provides a description element for form fields with proper
+ * styling and typography for help text.
+ *
+ * @param props - The component props
+ * @param props.className - Additional CSS classes
+ * @returns JSX element representing the field description
+ */
 function FieldDescription({ className, ...props }: React.ComponentProps<"p">) {
   return (
     <p
@@ -162,6 +244,17 @@ function FieldDescription({ className, ...props }: React.ComponentProps<"p">) {
   );
 }
 
+/**
+ * FieldSeparator component for form field separators.
+ *
+ * This component provides a visual separator between form fields with optional
+ * content display and proper styling.
+ *
+ * @param props - The component props
+ * @param props.className - Additional CSS classes
+ * @param props.children - Optional content to display in the separator
+ * @returns JSX element representing the field separator
+ */
 function FieldSeparator({
   children,
   className,
@@ -192,6 +285,18 @@ function FieldSeparator({
   );
 }
 
+/**
+ * FieldError component for form field error display.
+ *
+ * This component provides error display for form fields with support for
+ * multiple error messages and proper accessibility features.
+ *
+ * @param props - The component props
+ * @param props.className - Additional CSS classes
+ * @param props.children - Custom error content
+ * @param props.errors - Array of error objects to display
+ * @returns JSX element representing the field error display
+ */
 function FieldError({
   className,
   children,

@@ -1,3 +1,14 @@
+/**
+ * Authentication layout component.
+ *
+ * This layout provides a centered, full-screen container for authentication
+ * pages (login and register). It includes responsive design and theme support
+ * for both light and dark modes.
+ *
+ * @param props - The component props
+ * @param props.children - React children to render within the auth layout
+ * @returns JSX element representing the authentication layout
+ */
 export default function AuthLayout({
   children,
 }: {

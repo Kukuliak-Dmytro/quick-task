@@ -8,6 +8,15 @@ import { Field, FieldError, FieldLabel } from "@/shared/components/ui/field";
 import { useState } from "react";
 import { signIn } from "../auth.service";
 
+/**
+ * LoginForm component for user authentication.
+ *
+ * This component provides a form for users to sign in with their email and password.
+ * It includes form validation using React Hook Form and Zod, error handling, and loading states.
+ * The form automatically redirects users after successful authentication.
+ *
+ * @returns JSX element representing the login form
+ */
 export const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

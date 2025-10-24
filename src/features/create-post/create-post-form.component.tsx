@@ -6,10 +6,14 @@ import { createPost, POST_QUERY_KEYS } from "@/entities/api";
 import { Button } from "@/shared/components/ui/button";
 
 /**
- * CreatePostForm component for creating new posts
+ * CreatePostForm component for creating new posts.
  *
  * This component provides a form for authenticated users to create
  * new posts with title and content. All posts are published immediately.
+ * The form includes validation and automatically refreshes the post list
+ * after successful creation.
+ *
+ * @returns JSX element representing the create post form
  */
 export const CreatePostForm = () => {
   const queryClient = useQueryClient();
