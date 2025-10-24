@@ -1,0 +1,60 @@
+---
+alwaysApply: true
+---
+
+# Code / Folders / Naming - Conventions
+
+# General
+
+* Named export:
+  * `export const TodoList = () => {}`
+
+    \
+* Use interfaces over the types
+  * add `I` to interface `ITodoList ` or `ITodoListItem`
+  * \
+    \
+* Do not create `index.tsx` files where it's not required. Give the proper name, to avoid this situation:
+  * ![](attachments/6dcf3e61-67ac-4df4-8777-bed6c819c41e.png "left-50 =763x32")
+
+
+# Components
+
+* Use **PascalCase** (capitalizing the first letter of each word) for component names. 
+  * `export const TodoList = () => {}`
+
+# Files
+
+* Use **kebab-case**: All words are in lowercase and separated by hyphens (-).
+  * `todo-list.tsx`
+
+
+# Variables
+
+* State variables - Prefix state variables with **is**, **has**, or **should** for BOOLEAN values
+  * `const [isActive, setIsActive] = useState(false)`
+  * `const [hasActive, setHasActive] = useState(false)`
+  * etc.
+
+    \
+* Event handlers - Use **handle** as a prefix for event handler functions
+  * `const handleUpdate = () => {}`
+
+    \
+* Functions - Use **camelCase** for naming
+  * `const getUserData = () => {}`
+
+    \
+* Constants - Use  **UPPERCASE** letters with **underscores**
+  * `const MAX_LIMIT = 10;`
+  * `const API_URL = "api.com";`
+
+
+# File structure:
+
+* **Components** - follow the [atomic design](https://atomicdesign.bradfrost.com/chapter-2/) methodology
+
+#  
+
+
+\
