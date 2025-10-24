@@ -1,4 +1,4 @@
-import { queryOptions } from "@tanstack/react-query";
+import { infiniteQueryOptions } from "@tanstack/react-query";
 import { getPosts } from "./post.api";
 
 // Query key constants
@@ -7,18 +7,24 @@ export const POST_QUERY_KEYS = {
 } as const;
 
 /**
- * Query options for fetching all posts.
+ * Infinite query options for fetching posts with pagination.
  *
- * This function creates query options for React Query to fetch all posts
- * from the database.
+ * This function creates infinite query options for React Query to fetch posts
+ * from the database with pagination support. Each page contains 5 posts by default.
  *
- * @returns React Query options object
+ * @returns React Query infinite query options object
  */
-export const postsQueryOptions = () => {
-  return queryOptions({
+export const postsInfiniteQueryOptions = () => {
+  return infiniteQueryOptions({
     queryKey: POST_QUERY_KEYS.posts(),
-    queryFn: async () => {
-      return await getPosts();
+    queryFn: async ({ pageParam = 1 }) => {
+      return await getPosts({ page: pageParam, limit: 5 });
     },
+    getNextPageParam: (lastPage) => {
+      return lastPage.pagination.hasNextPage
+        ? lastPage.pagination.page + 1
+        : undefined;
+    },
+    initialPageParam: 1,
   });
 };

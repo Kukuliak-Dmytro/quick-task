@@ -1,13 +1,19 @@
 "use client";
 
 import { IPost } from "@/shared/interfaces";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/shared/components/ui/accordion";
 
 interface IPostCardProps {
   post: IPost;
 }
 
 /**
- * PostCard component for displaying a single post
+ * PostCard component for displaying a single post with accordion for full content
  *
  * @param post - Post object to display
  * @returns PostCard component
@@ -19,6 +25,12 @@ export const PostCard = ({ post }: IPostCardProps) => {
     month: "long",
     day: "numeric",
   });
+
+  // Truncate content for preview (first 150 characters)
+  const truncatedContent =
+    post.content.length > 150
+      ? `${post.content.substring(0, 150)}...`
+      : post.content;
 
   return (
     <article
@@ -42,8 +54,23 @@ export const PostCard = ({ post }: IPostCardProps) => {
         )}
       </div>
 
-      {/* Post Content */}
-      <p className="text-muted-foreground mb-4 line-clamp-3">{post.content}</p>
+      {/* Post Content with Accordion */}
+      <div className="mb-4">
+        <Accordion type="single" collapsible className="w-full">
+          <AccordionItem value="content" className="border-none">
+            <AccordionTrigger className="text-left hover:no-underline py-2">
+              <div className="text-muted-foreground">
+                <p className="line-clamp-3">{truncatedContent}</p>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="pt-4">
+              <div className="text-muted-foreground whitespace-pre-wrap">
+                {post.content}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </div>
 
       {/* Post Footer */}
       <div

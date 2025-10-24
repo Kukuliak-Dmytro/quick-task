@@ -1,18 +1,19 @@
 import { NextResponse } from "next/server";
 import { db } from "@/shared/lib/db/database";
 import { posts, user } from "@/shared/lib/db/schemas";
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, count } from "drizzle-orm";
 import { auth } from "@/shared/lib/db/auth";
 import { headers } from "next/headers";
 
 /**
  * GET /api/posts
- * Fetches all posts from the database across all users with author information
+ * Fetches posts from the database with pagination support
  * Requires authentication
  *
- * @returns JSON response with posts array (including author details) and total count
+ * @param request - The incoming request with search params
+ * @returns JSON response with posts array, pagination info, and total count
  */
-export async function GET() {
+export async function GET(request: Request) {
   try {
     // Verify authentication
     const session = await auth.api.getSession({
@@ -23,8 +24,19 @@ export async function GET() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Fetch all posts with author information via join
-    const allPosts = await db
+    // Parse search params for pagination
+    const { searchParams } = new URL(request.url);
+    const page = parseInt(searchParams.get("page") || "1");
+    const limit = parseInt(searchParams.get("limit") || "5");
+    const offset = (page - 1) * limit;
+
+    // Get total count for pagination info
+    const [{ totalCount }] = await db
+      .select({ totalCount: count() })
+      .from(posts);
+
+    // Fetch paginated posts with author information via join
+    const paginatedPosts = await db
       .select({
         id: posts.id,
         title: posts.title,
@@ -42,11 +54,25 @@ export async function GET() {
       })
       .from(posts)
       .leftJoin(user, eq(posts.authorId, user.id))
-      .orderBy(desc(posts.createdAt));
+      .orderBy(desc(posts.createdAt))
+      .limit(limit)
+      .offset(offset);
+
+    // Calculate pagination metadata
+    const totalPages = Math.ceil(totalCount / limit);
+    const hasNextPage = page < totalPages;
+    const hasPreviousPage = page > 1;
 
     return NextResponse.json({
-      posts: allPosts,
-      total: allPosts.length,
+      posts: paginatedPosts,
+      total: totalCount,
+      pagination: {
+        page,
+        limit,
+        totalPages,
+        hasNextPage,
+        hasPreviousPage,
+      },
     });
   } catch (error) {
     console.error("Error fetching posts:", error);

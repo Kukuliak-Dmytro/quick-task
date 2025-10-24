@@ -27,9 +27,21 @@ export interface IPost extends BasePost {
 }
 
 /**
+ * Pagination metadata interface
+ */
+export interface IPaginationInfo {
+  page: number;
+  limit: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+}
+
+/**
  * Response interface for paginated posts
  */
 export interface IPostsResponse {
   posts: IPost[];
   total: number;
+  pagination: IPaginationInfo;
 }
