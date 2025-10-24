@@ -1,5 +1,8 @@
 import { Button } from "@/shared/components/ui/button";
-export default function Home() {
+import { requireAuth } from "@/shared/utils/auth-utils";
+export default async function Home() {
+  const session = await requireAuth();
+  console.log(session);
   return (
     <div
       className="flex min-h-screen items-center justify-center bg-zinc-50
