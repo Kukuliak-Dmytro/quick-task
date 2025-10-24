@@ -9,7 +9,7 @@ export function Providers({
   children: React.ReactNode;
 }>) {
   return (
-    <NextThemesProvider attribute="class" defaultTheme="system">
+    <NextThemesProvider attribute="class" defaultTheme="system" enableSystem>
       <ModeToggle />
       {children}
     </NextThemesProvider>
