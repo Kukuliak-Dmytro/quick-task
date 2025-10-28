@@ -1,14 +1,17 @@
 import { getPostsServer } from "@/entities/api/posts/post.server";
-import { PostCard } from "../post-card";
+import { PostCard } from "@/widgets/post-card";
 import { CreatePostForm } from "@/features/create-post";
 
 /**
- * PostList component rendered on the server.
+ * PostsList module component rendered on the server.
  *
- * Fetches and renders the initial page of posts directly on the server for
- * fast initial loads and SEO. Bypasses API routes and React Query.
+ * This module handles the business logic for displaying posts including:
+ * - Data fetching and pagination
+ * - Orchestrating widgets (PostCard, CreatePostForm)
+ * - Managing empty states
+ * - Server-side rendering for performance
  */
-export const PostList = async () => {
+export const PostsList = async () => {
   const { posts, total } = await getPostsServer({ page: 1, limit: 5 });
 
   return (

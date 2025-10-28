@@ -1,4 +1,6 @@
-import { PostsPageComponent } from "@/modules/posts/posts-page/posts-page.component";
+import { Suspense } from "react";
+import { PostsList } from "@/modules/posts-list";
+import { PostListSkeleton } from "@/widgets/post-list-skeleton";
 import { requireAuth } from "@/shared/utils/auth-utils";
 
 /**
@@ -11,9 +13,14 @@ import { requireAuth } from "@/shared/utils/auth-utils";
  *
  * @returns Promise that resolves to JSX element representing the home page
  */
-export default async function Home() {
+const Home = async () => {
   // Require authentication - redirects to login if not authenticated
   await requireAuth();
 
-  return <PostsPageComponent />;
-}
+  return (
+    <Suspense fallback={<PostListSkeleton />}>
+      <PostsList />
+    </Suspense>
+  );
+};
+export default Home;
