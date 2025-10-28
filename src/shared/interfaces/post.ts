@@ -1,20 +1,11 @@
 import { type InferSelectModel } from "drizzle-orm";
-import { posts } from "@/shared/lib/db/schemas";
+import { posts, user } from "@/shared/lib/db/schemas";
 
 /**
  * Base post type inferred from the database schema.
  */
-type BasePost = InferSelectModel<typeof posts>;
-
-/**
- * Author information included with posts
- */
-export interface IPostAuthor {
-  id: string;
-  name: string;
-  email: string;
-  image: string | null;
-}
+type Post = InferSelectModel<typeof posts>;
+type Author = InferSelectModel<typeof user>;
 
 /**
  * Post type with author information.
@@ -22,8 +13,13 @@ export interface IPostAuthor {
  * This extends the base post type with author details
  * fetched via join from the user table.
  */
-export interface IPost extends BasePost {
-  author: IPostAuthor | null;
+export interface IPost extends Post {
+  author: Author | null;
+}
+
+export interface IPaginationParams {
+  page?: number;
+  limit?: number;
 }
 
 /**

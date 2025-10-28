@@ -3,6 +3,8 @@
 import { useActionState, useEffect, useRef, useState } from "react";
 import { createPostAction } from "./create-post.action";
 import { Button } from "@/shared/components/ui/button";
+import { Input } from "@/shared/components/ui/input";
+import { Label } from "@/shared/components/ui/label";
 
 /**
  * CreatePostForm component for creating new posts.
@@ -25,8 +27,11 @@ export const CreatePostForm = () => {
   // Close form and reset on success
   useEffect(() => {
     if (state.success) {
-      setIsOpen(false);
-      formRef.current?.reset();
+      // Use setTimeout to avoid synchronous state updates in effect
+      setTimeout(() => {
+        setIsOpen(false);
+        formRef.current?.reset();
+      }, 0);
     }
   }, [state.success]);
 
@@ -54,41 +59,33 @@ export const CreatePostForm = () => {
         <input type="hidden" name="published" value="true" />
 
         {/* Title Input */}
-        <div>
-          <label
-            htmlFor="title"
-            className="block text-sm font-medium mb-2 text-foreground">
-            Title
-          </label>
-          <input
+        <div className="space-y-2">
+          <Label htmlFor="title">Title</Label>
+          <Input
             id="title"
             name="title"
             type="text"
             placeholder="Enter post title..."
             maxLength={200}
-            className="w-full px-4 py-2 border border-border rounded-lg
-              focus:outline-none focus:ring-2 focus:ring-primary bg-background
-              text-foreground"
             required
             disabled={isPending}
           />
         </div>
 
         {/* Content Textarea */}
-        <div>
-          <label
-            htmlFor="content"
-            className="block text-sm font-medium mb-2 text-foreground">
-            Content
-          </label>
+        <div className="space-y-2">
+          <Label htmlFor="content">Content</Label>
           <textarea
             id="content"
             name="content"
             placeholder="Write your post content..."
             rows={6}
-            className="w-full px-4 py-2 border border-border rounded-lg
-              focus:outline-none focus:ring-2 focus:ring-primary resize-vertical
-              bg-background text-foreground"
+            className="w-full px-3 py-2 border border-input bg-background
+              text-sm ring-offset-background placeholder:text-muted-foreground
+              focus-visible:outline-none focus-visible:ring-2
+              focus-visible:ring-ring focus-visible:ring-offset-2
+              disabled:cursor-not-allowed disabled:opacity-50 rounded-md
+              resize-vertical"
             required
             disabled={isPending}
           />
@@ -107,6 +104,14 @@ export const CreatePostForm = () => {
         <div className="flex gap-3">
           <Button type="submit" disabled={isPending} size="lg">
             {isPending ? "Creating..." : "Create Post"}
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => setIsOpen(false)}
+            disabled={isPending}
+            size="lg">
+            Cancel
           </Button>
         </div>
       </form>

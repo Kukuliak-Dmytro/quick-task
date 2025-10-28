@@ -1,6 +1,7 @@
 import { getPostsServer } from "@/entities/api/posts/post.server";
 import { PostCard } from "@/widgets/post-card";
 import { CreatePostForm } from "@/features/create-post";
+import { IPost } from "@/shared/interfaces/post";
 
 /**
  * PostsList module component rendered on the server.
@@ -36,7 +37,7 @@ export const PostsList = async () => {
       ) : (
         <div className="flex flex-col gap-6">
           {posts.map((post) => (
-            <PostCard key={post.id} post={post} />
+            <PostCard key={post.id} post={post as IPost} />
           ))}
         </div>
       )}

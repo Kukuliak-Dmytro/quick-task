@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { PostsList } from "@/modules/posts-list";
-import { PostListSkeleton } from "@/widgets/post-list-skeleton";
+import { PostListSkeleton } from "@/modules/posts-list";
 import { requireAuth } from "@/shared/utils/auth-utils";
 
 /**

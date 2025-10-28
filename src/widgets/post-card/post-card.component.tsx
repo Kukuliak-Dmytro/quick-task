@@ -9,16 +9,6 @@ import {
 } from "@/shared/components/ui/accordion";
 
 /**
- * Props interface for the PostCard component.
- *
- * @interface IPostCardProps
- */
-interface IPostCardProps {
-  /** The post object to display */
-  post: IPost;
-}
-
-/**
  * PostCard component for displaying a single post with accordion for full content.
  *
  * This component renders a post card with a collapsible accordion that shows
@@ -29,7 +19,7 @@ interface IPostCardProps {
  * @param props.post - The post object containing all post data and metadata
  * @returns JSX element representing the post card
  */
-export const PostCard = ({ post }: IPostCardProps) => {
+export const PostCard = ({ post }: { post: IPost }) => {
   // Format date to readable string
   const formattedDate = new Date(post.createdAt).toLocaleDateString("en-US", {
     year: "numeric",

@@ -3,18 +3,7 @@ import "server-only";
 import { db } from "@/shared/lib/db/database";
 import { posts, user } from "@/shared/lib/db/schemas";
 import { desc, eq, count } from "drizzle-orm";
-
-/**
- * Server-side post fetching parameters.
- *
- * @interface IGetPostsServerParams
- */
-export interface IGetPostsServerParams {
-  /** The page number to fetch (1-based indexing) */
-  page?: number;
-  /** The number of posts per page */
-  limit?: number;
-}
+import { IPaginationParams } from "@/shared/interfaces/post";
 
 /**
  * Fetch posts directly from the database on the server.
@@ -27,7 +16,7 @@ export interface IGetPostsServerParams {
  * @returns Promise that resolves to posts array with pagination metadata
  * @throws {Error} Throws an error if database operation fails
  */
-export async function getPostsServer(params?: IGetPostsServerParams) {
+export async function getPostsServer(params?: IPaginationParams) {
   const page = params?.page || 1;
   const limit = params?.limit || 5;
   const offset = (page - 1) * limit;
