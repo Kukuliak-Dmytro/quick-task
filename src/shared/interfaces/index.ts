@@ -7,3 +7,4 @@
 
 // Re-export all interfaces
 export * from "./post";
+export * from "./comment";

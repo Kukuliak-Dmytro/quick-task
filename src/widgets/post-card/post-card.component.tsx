@@ -1,19 +1,14 @@
 "use client";
 
 import { IPost } from "@/shared/interfaces";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/shared/components/ui/accordion";
+import Link from "next/link";
 
 /**
- * PostCard component for displaying a single post with accordion for full content.
+ * PostCard component for displaying a single post preview with link to full post.
  *
- * This component renders a post card with a collapsible accordion that shows
- * a truncated preview of the content and allows users to expand to see the full text.
- * The component includes post metadata such as author, date, and publication status.
+ * This component renders a post card with a truncated preview of the content
+ * and a link to view the full post. The component includes post metadata such as
+ * author, date, and publication status.
  *
  * @param props - The component props
  * @param props.post - The post object containing all post data and metadata
@@ -55,22 +50,22 @@ export const PostCard = ({ post }: { post: IPost }) => {
         )}
       </div>
 
-      {/* Post Content with Accordion */}
+      {/* Post Content Preview */}
       <div className="mb-4">
-        <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value="content" className="border-none">
-            <AccordionTrigger className="text-left hover:no-underline py-2">
-              <div className="text-muted-foreground">
-                <p className="line-clamp-3">{truncatedContent}</p>
-              </div>
-            </AccordionTrigger>
-            <AccordionContent className="pt-4">
-              <div className="text-muted-foreground whitespace-pre-wrap">
-                {post.content}
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+        <div className="text-muted-foreground">
+          <p className="line-clamp-3">{truncatedContent}</p>
+        </div>
+      </div>
+
+      {/* Read More Link */}
+      <div className="mb-4">
+        <Link
+          href={`/posts/${post.id}`}
+          className="inline-flex items-center text-blue-600 dark:text-blue-400
+            hover:text-blue-800 dark:hover:text-blue-300 transition-colors
+            font-medium">
+          Read full post →
+        </Link>
       </div>
 
       {/* Post Footer */}

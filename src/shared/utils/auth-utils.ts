@@ -13,7 +13,9 @@ import { redirect } from "next/navigation";
  * @returns Promise that resolves to the authenticated session
  * @throws {Redirect} Redirects to login page if not authenticated
  */
-export const requireAuth = async (redirectTo: string = "/login") => {
+export const requireAuth = async (
+  redirectTo: "/login" | "/register" = "/login",
+) => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });

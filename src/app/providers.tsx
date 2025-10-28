@@ -17,11 +17,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
  * @param props.children - React children to wrap with providers
  * @returns JSX element representing the providers wrapper
  */
-export function Providers({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export function Providers({ children }: { children: React.ReactNode }) {
   // Create QueryClient instance - use React.useState to ensure it's created once per component instance
   const [queryClient] = React.useState(
     () =>

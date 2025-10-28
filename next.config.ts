@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   output: "standalone",
   cacheComponents: true,
+  typedRoutes: true,
 };
 
 export default nextConfig;

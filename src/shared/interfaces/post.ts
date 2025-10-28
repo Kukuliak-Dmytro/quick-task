@@ -1,5 +1,6 @@
 import { type InferSelectModel } from "drizzle-orm";
 import { posts, user } from "@/shared/lib/db/schemas";
+import { IComment } from "./comment";
 
 /**
  * Base post type inferred from the database schema.
@@ -15,6 +16,16 @@ type Author = InferSelectModel<typeof user>;
  */
 export interface IPost extends Post {
   author: Author | null;
+}
+
+/**
+ * Post type with author and comments information.
+ *
+ * This extends the base post type with author details
+ * and associated comments for detailed post views.
+ */
+export interface IPostWithComments extends IPost {
+  comments: IComment[];
 }
 
 export interface IPaginationParams {

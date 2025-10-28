@@ -8,11 +8,16 @@ export const PostCardSkeleton = () => {
         <div className="h-6 bg-muted rounded-full w-20"></div>
       </div>
 
-      {/* Content (mimics accordion preview) */}
+      {/* Content Preview */}
       <div className="mb-4 space-y-2">
         <div className="h-4 bg-muted rounded-md w-full"></div>
         <div className="h-4 bg-muted rounded-md w-5/6"></div>
         <div className="h-4 bg-muted rounded-md w-4/6"></div>
+      </div>
+
+      {/* Read More Link */}
+      <div className="mb-4">
+        <div className="h-4 bg-muted rounded-md w-24"></div>
       </div>
 
       {/* Footer */}
