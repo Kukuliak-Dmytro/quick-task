@@ -1,7 +1,4 @@
-import { Suspense } from "react";
-import { PostsList } from "@/modules/posts-list";
-import { PostListSkeleton } from "@/modules/posts-list";
-import { requireAuth } from "@/shared/utils/auth-utils";
+import Link from "next/link";
 
 /**
  * Home page component with streaming server-side rendering.
@@ -14,13 +11,11 @@ import { requireAuth } from "@/shared/utils/auth-utils";
  * @returns Promise that resolves to JSX element representing the home page
  */
 const Home = async () => {
-  // Require authentication - redirects to login if not authenticated
-  await requireAuth();
-
   return (
-    <Suspense fallback={<PostListSkeleton />}>
-      <PostsList />
-    </Suspense>
+    <>
+      <h1>Welcome to the home page</h1>
+      <Link href="/posts">Posts</Link>
+    </>
   );
 };
 export default Home;

@@ -4,7 +4,7 @@ import { db } from "@/shared/lib/db/database";
 import { posts, user } from "@/shared/lib/db/schemas";
 import { desc, eq, count } from "drizzle-orm";
 import { IPaginationParams } from "@/shared/interfaces/post";
-
+import { requireAuth } from "@/shared/utils/auth-utils";
 /**
  * Fetch posts directly from the database on the server.
  *
@@ -20,7 +20,9 @@ export async function getPostsServer(params?: IPaginationParams) {
   const page = params?.page || 1;
   const limit = params?.limit || 5;
   const offset = (page - 1) * limit;
-
+  // data access control
+  //don't make a separate layer, just a quick check
+  await requireAuth();
   try {
     // Get total count for pagination info
     const [{ totalCount }] = await db

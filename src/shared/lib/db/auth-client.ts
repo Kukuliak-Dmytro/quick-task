@@ -6,7 +6,7 @@ import { createAuthClient } from "better-auth/react";
  * This client provides authentication functionality for client-side components,
  * including sign-in, sign-up, and sign-out operations. It connects to the
  * server-side auth configuration using the configured base URL.
- * 
+ *
  * @constant authClient
  */
 export const authClient = createAuthClient({
