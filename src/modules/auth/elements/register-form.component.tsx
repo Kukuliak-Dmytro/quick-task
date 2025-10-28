@@ -1,82 +1,72 @@
 "use client";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ISignUpSchema, signUpSchema } from "../auth.interface";
 import { Input } from "@/shared/components/ui/input";
 import { Button } from "@/shared/components/ui/button";
-import { Field, FieldError, FieldLabel } from "@/shared/components/ui/field";
-import { useState } from "react";
-import { signUp } from "../auth.service";
+import { Field, FieldLabel } from "@/shared/components/ui/field";
+import { useActionState } from "react";
+import { signUpAction } from "../auth.action";
 
 /**
  * RegisterForm component for user registration.
  *
  * This component provides a form for new users to create an account with their name,
- * email, and password. It includes form validation using React Hook Form and Zod,
- * error handling, and loading states. The form automatically redirects users after
- * successful registration.
+ * email, and password. It uses Next.js server actions with native HTML form validation
+ * for progressive enhancement. The form works without JavaScript and automatically
+ * redirects users after successful registration.
  *
  * @returns JSX element representing the registration form
  */
 export const RegisterForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ISignUpSchema>({
-    resolver: zodResolver(signUpSchema),
+  const [state, formAction, isPending] = useActionState(signUpAction, {
+    success: true,
   });
 
-  const onSubmit = async (data: ISignUpSchema) => {
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      await signUp(data.name, data.email, data.password);
-    } catch (err: unknown) {
-      setError((err as Error).message || "Register failed");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+    <form action={formAction} className="flex flex-col gap-4">
       <Field>
         <FieldLabel htmlFor="name">Name</FieldLabel>
-        <Input {...register("name")} id="name" type="text" placeholder="Name" />
-        <FieldError errors={errors.name ? [errors.name] : []} />
+        <Input
+          id="name"
+          name="name"
+          type="text"
+          placeholder="Name"
+          required
+          minLength={1}
+          disabled={isPending}
+        />
       </Field>
 
       <Field>
         <FieldLabel htmlFor="email">Email</FieldLabel>
         <Input
-          {...register("email")}
           id="email"
+          name="email"
           type="email"
           placeholder="Email"
+          required
+          disabled={isPending}
         />
-        <FieldError errors={errors.email ? [errors.email] : []} />
       </Field>
 
       <Field>
         <FieldLabel htmlFor="password">Password</FieldLabel>
         <Input
-          {...register("password")}
           id="password"
+          name="password"
           type="password"
           placeholder="Password"
+          minLength={8}
+          maxLength={100}
+          required
+          disabled={isPending}
         />
-        <FieldError errors={errors.password ? [errors.password] : []} />
       </Field>
 
-      {error && <div className="text-red-500 text-sm">{error}</div>}
+      {state?.error && (
+        <div className="text-red-500 text-sm">{state.error}</div>
+      )}
 
-      <Button type="submit" disabled={isLoading}>
-        {isLoading ? "Creating account..." : "Register"}
+      <Button type="submit" disabled={isPending}>
+        {isPending ? "Creating account..." : "Register"}
       </Button>
     </form>
   );

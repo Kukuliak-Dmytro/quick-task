@@ -10,3 +10,6 @@
 export * from "./post.api";
 export * from "./post.query";
 export * from "./post.mutation";
+
+// NOTE: post.server is NOT exported here to prevent client bundling
+// Import directly: import { getPostsServer } from "@/entities/api/posts/post.server";

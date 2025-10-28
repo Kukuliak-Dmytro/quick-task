@@ -1,27 +1,20 @@
-import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
-import { getQueryClient } from "@/shared/lib/utils/get-query-client";
-import { postsInfiniteQueryOptions } from "@/entities/api";
-import { PostList } from "@/widgets/posts";
+import { Suspense } from "react";
+import { PostList, PostListSkeleton } from "@/widgets/posts";
 
 /**
- * Main posts page component with server-side data fetching.
+ * Main posts page component with streaming server-side rendering.
  *
- * This component handles server-side data prefetching and renders the posts page
- * with full functionality. It orchestrates the PostList widget and provides
- * hydration boundary for optimal performance with infinite query support.
+ * This component uses React Server Components with Suspense boundaries to
+ * stream posts data progressively. The page shell renders immediately while
+ * the post content streams in, providing excellent perceived performance.
  *
  * @returns Promise that resolves to JSX element representing the posts page
  */
 export const PostsPageComponent = async () => {
-  const queryClient = getQueryClient();
-
-  // Prefetch the first page of posts data on the server
-  await queryClient.prefetchInfiniteQuery(postsInfiniteQueryOptions());
-
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
+    <Suspense fallback={<PostListSkeleton />}>
       <PostList />
-    </HydrationBoundary>
+    </Suspense>
   );
 };
 

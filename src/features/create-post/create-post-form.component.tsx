@@ -1,53 +1,34 @@
 "use client";
 
-import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createPost, POST_QUERY_KEYS } from "@/entities/api";
+import { useActionState, useEffect, useRef, useState } from "react";
+import { createPostAction } from "./create-post.action";
 import { Button } from "@/shared/components/ui/button";
 
 /**
  * CreatePostForm component for creating new posts.
  *
  * This component provides a form for authenticated users to create
- * new posts with title and content. All posts are published immediately.
- * The form includes validation and automatically refreshes the post list
- * after successful creation.
+ * new posts with title and content. Uses Next.js server actions with
+ * native HTML form validation for progressive enhancement. The form
+ * revalidates the page automatically after successful creation.
  *
  * @returns JSX element representing the create post form
  */
 export const CreatePostForm = () => {
-  const queryClient = useQueryClient();
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
-  // Create post mutation
-  const mutation = useMutation({
-    mutationFn: createPost,
-    onSuccess: () => {
-      // Invalidate posts query to refetch the list
-      queryClient.invalidateQueries({ queryKey: POST_QUERY_KEYS.posts() });
-
-      // Reset form
-      setTitle("");
-      setContent("");
-      setIsOpen(false);
-    },
+  const [state, formAction, isPending] = useActionState(createPostAction, {
+    success: false,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!title.trim() || !content.trim()) {
-      return;
+  // Close form and reset on success
+  useEffect(() => {
+    if (state.success) {
+      setIsOpen(false);
+      formRef.current?.reset();
     }
-
-    mutation.mutate({
-      title: title.trim(),
-      content: content.trim(),
-      published: true, // Always publish immediately
-    });
-  };
+  }, [state.success]);
 
   if (!isOpen) {
     return (
@@ -68,7 +49,10 @@ export const CreatePostForm = () => {
         </Button>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form ref={formRef} action={formAction} className="space-y-4">
+        {/* Hidden published field - always true */}
+        <input type="hidden" name="published" value="true" />
+
         {/* Title Input */}
         <div>
           <label
@@ -78,15 +62,15 @@ export const CreatePostForm = () => {
           </label>
           <input
             id="title"
+            name="title"
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
             placeholder="Enter post title..."
+            maxLength={200}
             className="w-full px-4 py-2 border border-border rounded-lg
               focus:outline-none focus:ring-2 focus:ring-primary bg-background
               text-foreground"
             required
-            disabled={mutation.isPending}
+            disabled={isPending}
           />
         </div>
 
@@ -99,31 +83,30 @@ export const CreatePostForm = () => {
           </label>
           <textarea
             id="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
+            name="content"
             placeholder="Write your post content..."
             rows={6}
             className="w-full px-4 py-2 border border-border rounded-lg
               focus:outline-none focus:ring-2 focus:ring-primary resize-vertical
               bg-background text-foreground"
             required
-            disabled={mutation.isPending}
+            disabled={isPending}
           />
         </div>
 
         {/* Error Message */}
-        {mutation.isError && (
+        {state.error && (
           <div
             className="p-3 rounded-lg bg-destructive/10 text-destructive border
               border-destructive/20 text-sm">
-            Failed to create post. Please try again.
+            {state.error}
           </div>
         )}
 
         {/* Submit Button */}
         <div className="flex gap-3">
-          <Button type="submit" disabled={mutation.isPending} size="lg">
-            {mutation.isPending ? "Creating..." : "Create Post"}
+          <Button type="submit" disabled={isPending} size="lg">
+            {isPending ? "Creating..." : "Create Post"}
           </Button>
         </div>
       </form>

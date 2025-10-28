@@ -2,11 +2,12 @@ import { PostsPageComponent } from "@/modules/posts/posts-page/posts-page.compon
 import { requireAuth } from "@/shared/utils/auth-utils";
 
 /**
- * Home page component.
+ * Home page component with streaming server-side rendering.
  *
- * This page demonstrates server-side prefetching with TanStack Query.
- * Data is fetched on the server and hydrated on the client for optimal
- * performance and SEO. Requires authentication to access.
+ * This page uses React Server Components with Suspense boundaries to stream
+ * content progressively. Authentication is verified server-side, and posts
+ * are fetched directly from the database for optimal performance and SEO.
+ * Requires authentication to access.
  *
  * @returns Promise that resolves to JSX element representing the home page
  */
