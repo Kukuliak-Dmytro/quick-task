@@ -26,19 +26,3 @@ export const requireAuth = async (
 
   return session;
 };
-
-/**
- * Gets the current session without redirecting.
- *
- * This function retrieves the current user session without performing any
- * redirects. Useful for conditional rendering based on authentication status.
- *
- * @returns Promise that resolves to the session or null if not authenticated
- */
-export const getSession = async () => {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-
-  return session;
-};

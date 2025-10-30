@@ -3,6 +3,8 @@ import { getCommentsServer } from "@/entities/api/comments";
 import { getPostById } from "@/entities/api/posts/post.server";
 import { IComment } from "@/shared/interfaces/comment";
 import { CommentForm } from "@/features/create-comment";
+import { CommentsListSkeleton } from "@/shared/components/ui/comments-list-skeleton.component";
+import { PostCardSkeleton } from "@/widgets/post-card";
 import { Suspense } from "react";
 import Link from "next/link";
 
@@ -40,11 +42,7 @@ export default async function PostPage({
       </div>
 
       {/* Post Content */}
-      <Suspense
-        fallback={
-          <div
-            className="animate-pulse bg-gray-200 dark:bg-gray-700 h-64 rounded"></div>
-        }>
+      <Suspense fallback={<PostCardSkeleton />}>
         <PostContent id={id} />
       </Suspense>
 
@@ -63,6 +61,9 @@ async function PostContent({ id }: { id: string }) {
   if (!post) {
     notFound();
   }
+
+  // Artificial delay for testing skeleton loading state
+  await new Promise((resolve) => setTimeout(resolve, 1000));
 
   return (
     <article className="mb-8">
@@ -97,6 +98,9 @@ async function CommentsList({ id }: { id: string }) {
     page: 1,
     limit: 20,
   });
+
+  // Artificial delay for testing skeleton loading state
+  await new Promise((resolve) => setTimeout(resolve, 2000));
 
   return (
     <div className="space-y-6 mb-8">
@@ -148,11 +152,7 @@ async function CommentsSection({ id }: { id: string }) {
       </h2>
 
       {/* Comments List - wrapped in Suspense */}
-      <Suspense
-        fallback={
-          <div
-            className="animate-pulse bg-gray-200 dark:bg-gray-700 h-32 rounded"></div>
-        }>
+      <Suspense fallback={<CommentsListSkeleton />}>
         <CommentsList id={id} />
       </Suspense>
 
