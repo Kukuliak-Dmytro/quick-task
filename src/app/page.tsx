@@ -1,5 +1,5 @@
-import { PostsPageComponent } from "@/modules/posts/posts-page/posts-page.component";
 import { requireAuth } from "@/shared/utils/auth-utils";
+import { redirect } from "next/navigation";
 
 /**
  * Home page component.
@@ -12,7 +12,6 @@ import { requireAuth } from "@/shared/utils/auth-utils";
  */
 export default async function Home() {
   // Require authentication - redirects to login if not authenticated
-  await requireAuth();
-
-  return <PostsPageComponent />;
+  // await requireAuth();
+  redirect("/posts");
 }

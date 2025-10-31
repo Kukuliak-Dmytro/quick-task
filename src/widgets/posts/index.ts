@@ -6,5 +6,7 @@
  */
 
 // Re-export all post widgets
-export * from "./post-card";
-export * from "./post-list";
+export * from "./post-card/post-card.component";
+export * from "./post-list/post-list.component";
+export * from "./post-details/post-details.component";
+export * from "./post-full-card/post-full-card.component";

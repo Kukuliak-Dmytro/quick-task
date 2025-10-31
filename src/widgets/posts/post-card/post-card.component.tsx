@@ -7,6 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/shared/components/ui/accordion";
+import Link from "next/link";
 
 /**
  * Props interface for the PostCard component.
@@ -49,7 +50,11 @@ export const PostCard = ({ post }: IPostCardProps) => {
         transition-shadow duration-300">
       {/* Post Header */}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-2xl font-semibold text-foreground">{post.title}</h2>
+        <h2 className="text-2xl font-semibold text-foreground">
+          <Link className="hover:underline" href={`/posts/${post.id}`}>
+            {post.title}
+          </Link>
+        </h2>
         {post.published ? (
           <span
             className="px-3 py-1 text-xs font-medium rounded-full

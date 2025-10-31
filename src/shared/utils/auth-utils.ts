@@ -19,7 +19,7 @@ export const requireAuth = async (redirectTo: string = "/login") => {
   });
 
   if (!session) {
-    redirect(redirectTo);
+    redirect(redirectTo as "/login");
   }
 
   return session;

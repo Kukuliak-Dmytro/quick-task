@@ -14,8 +14,8 @@ import ky from "ky";
  */
 export const http = ky.create({
   prefixUrl: "/api",
-  timeout: 10000,
-  retry: 2,
+  timeout: 5000, // 5 seconds - reduced from 10 seconds for faster error detection
+  retry: 1, // Reduced retries for faster failure feedback
   credentials: "include", // Include cookies for authentication
   hooks: {
     beforeRequest: [

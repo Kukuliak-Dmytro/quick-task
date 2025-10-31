@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "rebuild": "npm run build && robocopy .next/static .next/standalone/.next/static /E /NFL /NDL /NJH /NJS /nc /ns /np & robocopy public .next/standalone/public /E /NFL /NDL /NJH /NJS /nc /ns /np & cd .next/standalone && node server.js",
     "lint": "eslint",
     "prettier": "prettier --check .",
     "format": "prettier --write . && eslint --fix .",

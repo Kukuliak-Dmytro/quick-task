@@ -1,3 +1,6 @@
+export * from "./posts";
+export * from "./comments";
+
 /**
  * API entities index file.
  *

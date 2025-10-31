@@ -11,3 +11,6 @@ export * from "./auth";
 
 // Posts schema
 export * from "./posts";
+
+// Comments schema
+export * from "./comments";

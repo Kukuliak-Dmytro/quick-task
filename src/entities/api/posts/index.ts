@@ -10,3 +10,5 @@
 export * from "./post.api";
 export * from "./post.query";
 export * from "./post.mutation";
+export * from "./post.by-id.api";
+export * from "./post.by-id.query";
