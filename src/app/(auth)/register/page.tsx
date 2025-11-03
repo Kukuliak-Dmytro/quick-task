@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import { RegisterForm } from "@/modules/auth/elements/register-form.component";
+
+/** Register page metadata configuration */
+export const metadata: Metadata = {
+  title: "Register",
+  description: "Create a new account",
+};
 
 /**
  * Register page component.

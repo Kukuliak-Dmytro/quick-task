@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import { LoginForm } from "@/modules/auth/elements/login-form.component";
+
+/** Login page metadata configuration */
+export const metadata: Metadata = {
+  title: "Login",
+  description: "Sign in to your account",
+};
 
 /**
  * Login page component.

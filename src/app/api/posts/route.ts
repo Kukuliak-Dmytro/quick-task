@@ -3,7 +3,6 @@ import { db } from "@/shared/lib/db/database";
 import { posts, user } from "@/shared/lib/db/schemas";
 import { desc, eq, count } from "drizzle-orm";
 import { auth } from "@/shared/lib/db/auth";
-import { headers } from "next/headers";
 
 /**
  * GET /api/posts
@@ -20,9 +19,9 @@ import { headers } from "next/headers";
  */
 export async function GET(request: Request) {
   try {
-    // Verify authentication
+    // Verify authentication - pass request headers directly
     const session = await auth.api.getSession({
-      headers: await headers(),
+      headers: request.headers,
     });
 
     if (!session) {
@@ -104,9 +103,9 @@ export async function GET(request: Request) {
  */
 export async function POST(request: Request) {
   try {
-    // Verify authentication
+    // Verify authentication - pass request headers directly
     const session = await auth.api.getSession({
-      headers: await headers(),
+      headers: request.headers,
     });
 
     if (!session) {

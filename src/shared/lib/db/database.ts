@@ -4,7 +4,7 @@ import * as schema from "./schemas";
 
 /**
  * PostgreSQL client instance for database connections.
- * 
+ *
  * @constant client
  */
 const client = postgres(process.env.DATABASE_URL!);
@@ -14,7 +14,7 @@ const client = postgres(process.env.DATABASE_URL!);
  *
  * This instance provides type-safe database operations using the defined schemas.
  * It connects to the PostgreSQL database using the configured connection string.
- * 
+ *
  * @constant db
  */
 export const db = drizzle({ client, schema });

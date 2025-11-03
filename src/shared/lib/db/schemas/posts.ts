@@ -7,7 +7,7 @@ import { user } from "./auth";
  * This table stores blog posts with their content, publication status,
  * and author information. It includes foreign key relationships to the user table
  * and automatic timestamp management for creation and updates.
- * 
+ *
  * @constant posts
  */
 export const posts = pgTable("posts", {

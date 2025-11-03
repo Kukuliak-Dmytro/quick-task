@@ -28,6 +28,3 @@ export interface ICommentsResponse {
     hasPreviousPage: boolean;
   };
 }
-
-
-

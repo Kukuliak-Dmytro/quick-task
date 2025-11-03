@@ -19,6 +19,3 @@ export const commentsInfiniteQueryOptions = (postId: string) => {
     initialPageParam: 1,
   });
 };
-
-
-

@@ -20,6 +20,3 @@ export const comments = pgTable("comments", {
     .$onUpdate(() => new Date())
     .notNull(),
 });
-
-
-
