@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
-import { auth } from "@/shared/lib/db/auth";
+import { auth } from "@/app/shared/lib/db/auth";
 
 export async function proxy(request: NextRequest) {
   const session = await auth.api.getSession({

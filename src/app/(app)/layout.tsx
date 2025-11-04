@@ -1,0 +1,47 @@
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "@/app/shared/styles/globals.css";
+import { Providers } from "@/app/(app)/providers";
+
+/** Geist Sans font configuration */
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+/** Geist Mono font configuration */
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+/** Application metadata configuration */
+export const metadata: Metadata = {
+  title: "Quick Task",
+  description: "Speedrunned a task in a day",
+};
+
+/**
+ * Root layout component for the application.
+ *
+ * This component provides the base HTML structure for all pages, including
+ * font configuration, global styles, and provider setup for theme and query management.
+ *
+ * @param props - The component props
+ * @param props.children - React children to render within the layout
+ * @returns JSX element representing the root layout
+ */
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <Providers>{children}</Providers>
+      </body>
+    </html>
+  );
+}

@@ -1,0 +1,34 @@
+import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
+import { getQueryClient } from "@/app/shared/lib/utils/get-query-client";
+import {
+  commentsInfiniteQueryOptions,
+  postByIdQueryOptions,
+} from "@/entities/api";
+import { PostDetails } from "@/app/widgets/posts/post-details/post-details.component";
+import { CommentList } from "@/app/widgets/comments";
+
+interface IPostPageProps {
+  postId: string;
+}
+
+export const PostPageComponent = async ({ postId }: IPostPageProps) => {
+  const queryClient = getQueryClient();
+
+  //this enables fetching in parallel
+  await Promise.all([
+    queryClient.prefetchQuery(postByIdQueryOptions(postId)),
+    queryClient.prefetchInfiniteQuery(commentsInfiniteQueryOptions(postId)),
+  ]);
+
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <div className="container mx-auto px-4 py-8 max-w-3xl">
+        <PostDetails postId={postId} />
+        <h3 className="mt-8 mb-2 text-xl font-semibold">Comments</h3>
+        <CommentList postId={postId} />
+      </div>
+    </HydrationBoundary>
+  );
+};
+
+export default PostPageComponent;
