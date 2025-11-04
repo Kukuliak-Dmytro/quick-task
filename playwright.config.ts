@@ -35,16 +35,11 @@ export default defineConfig({
   },
 
   /* Configure projects for major browsers */
+  // it's aslso possible to add a globalSetup option, but the docs recommend using projects as shown here
   projects: [
-    // Auth tests must run first since pages are protected
-    {
-      name: "auth",
-      testMatch: /auth\.spec\.ts/,
-      use: { ...devices["Desktop Chrome"] },
-    },
     // Setup: authenticate once and save auth state
     {
-      name: "setup",
+      name: "Authentication setup",
       testMatch: /.*\.setup\.ts/,
       use: { ...devices["Desktop Chrome"] },
     },
@@ -56,7 +51,7 @@ export default defineConfig({
         ...devices["Desktop Chrome"],
         storageState: "playwright/.auth/user.json",
       },
-      dependencies: ["setup"],
+      dependencies: ["Authentication setup"],
     },
     // Post tests run after home, reuse same auth state
     {
@@ -66,7 +61,7 @@ export default defineConfig({
         ...devices["Desktop Chrome"],
         storageState: "playwright/.auth/user.json",
       },
-      dependencies: ["setup"],
+      dependencies: ["Authentication setup"],
     },
 
     /* Test against mobile viewports. */
