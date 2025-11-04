@@ -1,19 +1,7 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "@/app/shared/styles/globals.css";
+import { gothic, franklin } from "@/config/fonts";
+import "@/config/styles/globals.css";
 import { Providers } from "@/app/(app)/providers";
-
-/** Geist Sans font configuration */
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-/** Geist Mono font configuration */
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 /** Application metadata configuration */
 export const metadata: Metadata = {
@@ -38,8 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${gothic.className} ${franklin.className} antialiased`}>
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -1,13 +1,14 @@
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import * as schema from "./schemas";
+import { envServer } from "@/config/envs";
 
 /**
  * PostgreSQL client instance for database connections.
  *
  * @constant client
  */
-const client = postgres(process.env.DATABASE_URL!);
+const client = postgres(envServer.DATABASE_URL);
 
 /**
  * Drizzle database instance with schema integration.

@@ -1,4 +1,5 @@
 import { defineConfig } from "drizzle-kit";
+import { envServer } from "@/config/envs";
 
 /**
  * Drizzle Kit configuration for database migrations and schema management.
@@ -16,8 +17,6 @@ export default defineConfig({
   // dialect to use
   dialect: "postgresql",
   dbCredentials: {
-    // if we create .env.local, Drizzle won't see it
-    // so we need to use the .env file even locally
-    url: process.env.DATABASE_URL!,
+    url: envServer.DATABASE_URL,
   },
 });

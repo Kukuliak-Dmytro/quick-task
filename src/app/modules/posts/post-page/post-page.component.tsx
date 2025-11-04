@@ -3,7 +3,7 @@ import { getQueryClient } from "@/app/shared/lib/utils/get-query-client";
 import {
   commentsInfiniteQueryOptions,
   postByIdQueryOptions,
-} from "@/entities/api";
+} from "@/app/entities/api";
 import { PostDetails } from "@/app/widgets/posts/post-details/post-details.component";
 import { CommentList } from "@/app/widgets/comments";
 

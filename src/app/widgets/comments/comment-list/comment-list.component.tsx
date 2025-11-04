@@ -1,7 +1,7 @@
 "use client";
 
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { commentsInfiniteQueryOptions } from "@/entities/api";
+import { commentsInfiniteQueryOptions } from "@/app/entities/api";
 
 interface ICommentListProps {
   postId: string;
