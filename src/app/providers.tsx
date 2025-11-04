@@ -3,9 +3,9 @@
 import * as React from "react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ModeToggle } from "@/features/theme-switcher/theme-switcher";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
+import { getQueryClient } from "@/shared/lib/utils/";
 /**
  * Providers component for application-wide context providers.
  *
@@ -23,17 +23,7 @@ export function Providers({
   children: React.ReactNode;
 }>) {
   // Create QueryClient instance - use React.useState to ensure it's created once per component instance
-  const [queryClient] = React.useState(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: {
-            staleTime: 60 * 1000, // 1 minute
-            refetchOnWindowFocus: false,
-          },
-        },
-      }),
-  );
+  const [queryClient] = React.useState(() => getQueryClient());
 
   return (
     <QueryClientProvider client={queryClient}>
