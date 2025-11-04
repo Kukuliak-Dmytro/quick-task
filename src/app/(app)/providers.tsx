@@ -6,6 +6,7 @@ import { ModeToggle } from "@/app/features/theme-switcher/theme-switcher";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { getQueryClient } from "@/app/shared/lib/utils";
+
 /**
  * Providers component for application-wide context providers.
  *
@@ -29,6 +30,7 @@ export function Providers({
     <QueryClientProvider client={queryClient}>
       <NextThemesProvider attribute="class" defaultTheme="system" enableSystem>
         <ModeToggle />
+
         {children}
       </NextThemesProvider>
       <ReactQueryDevtools initialIsOpen={false} />
