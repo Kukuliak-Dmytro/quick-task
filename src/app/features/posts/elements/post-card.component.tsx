@@ -1,7 +1,7 @@
 "use client";
 
 import { IPost } from "@/app/entities/models";
-import Link from "next/link";
+import { Link } from "@/pkg/libraries/locale";
 
 /**
  * Props interface for the PostCard component.
@@ -31,7 +31,6 @@ export const PostCard = ({ post }: IPostCardProps) => {
     day: "numeric",
   });
 
-  // Truncate content for preview (first 150 characters)
   const truncatedContent =
     post.content.length > 150
       ? `${post.content.substring(0, 150)}...`

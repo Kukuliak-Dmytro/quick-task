@@ -1,13 +1,6 @@
-import type { Metadata } from "next";
 import { RegisterModule } from "@/app/modules/auth";
 
 import { PageContainer } from "@/app/shared/components/page-container";
-
-/** Register page metadata configuration */
-export const metadata: Metadata = {
-  title: "Register",
-  description: "Create a new account",
-};
 
 /**
  * Register page component.
@@ -21,7 +14,7 @@ export const metadata: Metadata = {
 const RegisterPage = () => {
   return (
     <PageContainer>
-      <div className="space-y-6">
+      <div className="mx-auto max-w-md space-y-6">
         <RegisterModule />
       </div>
     </PageContainer>

@@ -1,4 +1,10 @@
 import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
+
+// i18n
+const withNextIntl = createNextIntlPlugin({
+  requestConfig: "./src/pkg/libraries/locale/request.ts",
+});
 
 /**
  * Next.js configuration object.
@@ -13,4 +19,4 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);

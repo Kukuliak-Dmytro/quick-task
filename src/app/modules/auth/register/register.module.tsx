@@ -1,6 +1,7 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations, useLocale } from "next-intl";
 import { ISignUpSchema, signUpSchema } from "../auth.interface";
 import { Input } from "@/app/shared/components/ui/input";
 import { Button } from "@/app/shared/components/ui/button";
@@ -23,6 +24,8 @@ import { signUp } from "../auth.service";
  * @returns JSX element representing the registration module
  */
 export const RegisterModule = () => {
+  const t = useTranslations();
+  const locale = useLocale();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -39,9 +42,9 @@ export const RegisterModule = () => {
     setError(null);
 
     try {
-      await signUp(data.name, data.email, data.password);
+      await signUp(data.name, data.email, data.password, locale);
     } catch (err: unknown) {
-      setError((err as Error).message || "Register failed");
+      setError((err as Error).message || t("auth_register_error"));
     } finally {
       setIsLoading(false);
     }
@@ -49,31 +52,42 @@ export const RegisterModule = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-      <h1 className="text-3xl font-bold text-center">Register</h1>
+      <h1 className="text-3xl font-bold text-center">
+        {t("auth_register_title")}
+      </h1>
       <Field>
-        <FieldLabel htmlFor="name">Name</FieldLabel>
-        <Input {...register("name")} id="name" type="text" placeholder="Name" />
+        <FieldLabel htmlFor="name">{t("auth_register_label_name")}</FieldLabel>
+        <Input
+          {...register("name")}
+          id="name"
+          type="text"
+          placeholder={t("auth_register_placeholder_name")}
+        />
         <FieldError errors={errors.name ? [errors.name] : []} />
       </Field>
 
       <Field>
-        <FieldLabel htmlFor="email">Email</FieldLabel>
+        <FieldLabel htmlFor="email">
+          {t("auth_register_label_email")}
+        </FieldLabel>
         <Input
           {...register("email")}
           id="email"
           type="email"
-          placeholder="Email"
+          placeholder={t("auth_register_placeholder_email")}
         />
         <FieldError errors={errors.email ? [errors.email] : []} />
       </Field>
 
       <Field>
-        <FieldLabel htmlFor="password">Password</FieldLabel>
+        <FieldLabel htmlFor="password">
+          {t("auth_register_label_password")}
+        </FieldLabel>
         <Input
           {...register("password")}
           id="password"
           type="password"
-          placeholder="Password"
+          placeholder={t("auth_register_placeholder_password")}
         />
         <FieldError errors={errors.password ? [errors.password] : []} />
       </Field>
@@ -81,7 +95,9 @@ export const RegisterModule = () => {
       {error && <div className="text-red-500 text-sm">{error}</div>}
 
       <Button type="submit" disabled={isLoading}>
-        {isLoading ? "Creating account..." : "Register"}
+        {isLoading
+          ? t("auth_register_button_loading")
+          : t("auth_register_button")}
       </Button>
     </form>
   );

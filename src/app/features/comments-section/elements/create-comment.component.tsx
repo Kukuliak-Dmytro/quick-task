@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { createComment, COMMENT_QUERY_KEYS } from "@/app/entities/api";
 import { Button } from "@/app/shared/components/ui/button";
 import { Input } from "@/app/shared/components/ui/input";
@@ -18,6 +19,7 @@ interface ICreateCommentProps {
  * @returns JSX element representing the create comment form
  */
 export const CreateComment = ({ postId }: ICreateCommentProps) => {
+  const t = useTranslations();
   const queryClient = useQueryClient();
   const [content, setContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -59,7 +61,7 @@ export const CreateComment = ({ postId }: ICreateCommentProps) => {
         <Input
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          placeholder="Write a comment..."
+          placeholder={t("comment_placeholder")}
           disabled={mutation.isPending || isSubmitting}
           className="w-full"
         />
@@ -69,14 +71,16 @@ export const CreateComment = ({ postId }: ICreateCommentProps) => {
         <div className="text-sm text-red-500">
           {mutation.error instanceof Error
             ? mutation.error.message
-            : "Failed to create comment"}
+            : t("comment_create_error")}
         </div>
       )}
 
       <Button
         type="submit"
         disabled={!content.trim() || mutation.isPending || isSubmitting}>
-        {mutation.isPending || isSubmitting ? "Posting..." : "Post Comment"}
+        {mutation.isPending || isSubmitting
+          ? t("comment_posting")
+          : t("comment_post_button")}
       </Button>
     </form>
   );

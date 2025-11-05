@@ -1,10 +1,10 @@
 "use client";
 
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { postsInfiniteQueryOptions } from "@/app/entities/api";
 import { PostCard } from "./post-card.component";
 import { PostCardSkeleton } from "./post-card-skeleton.component";
-import { CreatePostForm } from "@/app/features/create-post";
 import { Button } from "@/app/shared/components/ui/button";
 import { cn } from "@/app/shared/utils/utils";
 import { useCallback } from "react";
@@ -19,6 +19,7 @@ import { useCallback } from "react";
  * @returns JSX element representing the post list with infinite scroll functionality
  */
 export const PostList = () => {
+  const t = useTranslations();
   const {
     data,
     isLoading,
@@ -42,13 +43,7 @@ export const PostList = () => {
     return (
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <div className="mb-8 text-center">
-          <div className="h-9 w-48 bg-muted rounded mb-2 mx-auto animate-pulse" />
           <div className="h-4 w-32 bg-muted rounded mx-auto animate-pulse" />
-        </div>
-
-        {/* Create Post Button Skeleton */}
-        <div className="mb-6 flex justify-center">
-          <div className="h-11 w-40 bg-muted rounded animate-pulse" />
         </div>
 
         <div className="space-y-6">
@@ -66,7 +61,9 @@ export const PostList = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-center min-h-[400px]">
           <div className="text-center">
-            <p className="text-destructive text-lg mb-2">Error loading posts</p>
+            <p className="text-destructive text-lg mb-2">
+              {t("posts_load_error")}
+            </p>
             <p className="text-muted-foreground text-sm">
               {error instanceof Error ? error.message : "Unknown error"}
             </p>
@@ -80,22 +77,18 @@ export const PostList = () => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="mb-8 text-center">
-        <h1 className="text-3xl font-bold mb-2 text-foreground">Posts</h1>
         <p className="text-muted-foreground">
-          Total posts: {data?.pages[0]?.total ?? 0}
+          {t("posts_total", { count: data?.pages[0]?.total ?? 0 })}
         </p>
       </div>
 
       {/* Create Post Form */}
-      <CreatePostForm />
 
       {/* Empty state */}
       {allPosts.length === 0 ? (
         <div className="flex items-center justify-center min-h-[200px]">
           <div className="text-center">
-            <p className="text-muted-foreground text-lg">
-              No posts yet. Create your first post!
-            </p>
+            <p className="text-muted-foreground text-lg">{t("posts_empty")}</p>
           </div>
         </div>
       ) : (
@@ -119,10 +112,10 @@ export const PostList = () => {
                         `animate-spin rounded-full h-4 w-4 border-b-2
                           border-current mr-2`,
                       )}></div>
-                    Loading more posts...
+                    {t("posts_loading_more")}
                   </>
                 ) : (
-                  "Load More Posts"
+                  t("posts_load_more")
                 )}
               </Button>
             </div>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { createPost, POST_QUERY_KEYS } from "@/app/entities/api";
 import { Button } from "@/app/shared/components/ui/button";
 
@@ -16,6 +17,7 @@ import { Button } from "@/app/shared/components/ui/button";
  * @returns JSX element representing the create post form
  */
 export const CreatePostForm = () => {
+  const t = useTranslations();
   const queryClient = useQueryClient();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -45,26 +47,26 @@ export const CreatePostForm = () => {
     mutation.mutate({
       title: title.trim(),
       content: content.trim(),
-      published: true, // Always publish immediately
+      published: true,
     });
   };
 
   if (!isOpen) {
     return (
-      <div className="mb-6 flex justify-center">
+      <div className="mb flex justify-center">
         <Button onClick={() => setIsOpen(true)} size="lg">
-          Create New Post
+          {t("create_post_button")}
         </Button>
       </div>
     );
   }
 
   return (
-    <div className="mb-8 border rounded-lg p-6 bg-card">
+    <div className="mb-8 border rounded-lg p-6 bg-card max-w-4xl mx-auto">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-2xl font-semibold">Create New Post</h2>
+        <h2 className="text-2xl font-semibold">{t("create_post_title")}</h2>
         <Button variant="ghost" onClick={() => setIsOpen(false)}>
-          Cancel
+          {t("create_post_cancel")}
         </Button>
       </div>
 
@@ -74,14 +76,14 @@ export const CreatePostForm = () => {
           <label
             htmlFor="title"
             className="block text-sm font-medium mb-2 text-foreground">
-            Title
+            {t("create_post_label_title")}
           </label>
           <input
             id="title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Enter post title..."
+            placeholder={t("create_post_placeholder_title")}
             className="w-full px-4 py-2 border border-border rounded-lg
               focus:outline-none focus:ring-2 focus:ring-primary bg-background
               text-foreground"
@@ -95,13 +97,13 @@ export const CreatePostForm = () => {
           <label
             htmlFor="content"
             className="block text-sm font-medium mb-2 text-foreground">
-            Content
+            {t("create_post_label_content")}
           </label>
           <textarea
             id="content"
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            placeholder="Write your post content..."
+            placeholder={t("create_post_placeholder_content")}
             rows={6}
             className="w-full px-4 py-2 border border-border rounded-lg
               focus:outline-none focus:ring-2 focus:ring-primary resize-vertical
@@ -116,14 +118,16 @@ export const CreatePostForm = () => {
           <div
             className="p-3 rounded-lg bg-destructive/10 text-destructive border
               border-destructive/20 text-sm">
-            Failed to create post. Please try again.
+            {t("create_post_error")}
           </div>
         )}
 
         {/* Submit Button */}
         <div className="flex gap-3">
           <Button type="submit" disabled={mutation.isPending} size="lg">
-            {mutation.isPending ? "Creating..." : "Create Post"}
+            {mutation.isPending
+              ? t("create_post_creating")
+              : t("create_post_submit")}
           </Button>
         </div>
       </form>

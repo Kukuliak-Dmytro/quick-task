@@ -8,14 +8,21 @@ import { authClient } from "@/pkg/libraries/better-auth/auth-client";
  *
  * @param email - User's email address
  * @param password - User's password
+ * @param locale - User's locale for locale-aware redirects
  * @returns Promise that resolves to authentication data
  * @throws {Error} Throws an error if authentication fails
  */
-export const signIn = async (email: string, password: string) => {
+export const signIn = async (
+  email: string,
+  password: string,
+  locale?: string,
+) => {
+  const callbackURL = locale && locale !== "en" ? `/${locale}` : "/";
+
   const { data, error } = await authClient.signIn.email({
     email,
     password,
-    callbackURL: "/",
+    callbackURL,
     rememberMe: true,
   });
 
@@ -34,15 +41,23 @@ export const signIn = async (email: string, password: string) => {
  * @param name - User's full name
  * @param email - User's email address
  * @param password - User's password
+ * @param locale - User's locale for locale-aware redirects
  * @returns Promise that resolves to registration data
  * @throws {Error} Throws an error if registration fails
  */
-export const signUp = async (name: string, email: string, password: string) => {
+export const signUp = async (
+  name: string,
+  email: string,
+  password: string,
+  locale?: string,
+) => {
+  const callbackURL = locale && locale !== "en" ? `/${locale}` : "/";
+
   const { data, error } = await authClient.signUp.email({
     email,
     password,
     name,
-    callbackURL: "/",
+    callbackURL,
   });
 
   if (error) {

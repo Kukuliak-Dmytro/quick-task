@@ -30,7 +30,10 @@ export async function verifySession(request: Request) {
  */
 export async function requireSession(
   request: Request,
-): Promise<{ session: NonNullable<Awaited<ReturnType<typeof auth.api.getSession>>> } | NextResponse> {
+): Promise<
+  | { session: NonNullable<Awaited<ReturnType<typeof auth.api.getSession>>> }
+  | NextResponse
+> {
   const session = await verifySession(request);
 
   if (!session) {
@@ -39,4 +42,3 @@ export async function requireSession(
 
   return { session };
 }
-

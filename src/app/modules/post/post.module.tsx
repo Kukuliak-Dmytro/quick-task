@@ -1,4 +1,5 @@
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
+import { getTranslations } from "next-intl/server";
 import { getQueryClient } from "@/pkg/libraries/rest-api/service/rest-api.service";
 import {
   commentsInfiniteQueryOptions,
@@ -22,6 +23,7 @@ interface IPostModuleProps {
  * @returns Promise that resolves to JSX element representing the post module
  */
 export const PostModule = async ({ postId }: IPostModuleProps) => {
+  const t = await getTranslations();
   const queryClient = getQueryClient();
 
   //this enables fetching in parallel
@@ -34,7 +36,9 @@ export const PostModule = async ({ postId }: IPostModuleProps) => {
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div className="container mx-auto px-4 py-8 max-w-3xl">
         <FullPost postId={postId} />
-        <h3 className="mt-8 mb-2 text-xl font-semibold">Comments</h3>
+        <h3 className="mt-8 mb-2 text-xl font-semibold">
+          {t("comments_title")}
+        </h3>
         <CommentsSection postId={postId} />
       </div>
     </HydrationBoundary>

@@ -1,6 +1,7 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations, useLocale } from "next-intl";
 import { ISignInSchema, signInSchema } from "../auth.interface";
 import { Input } from "@/app/shared/components/ui/input";
 import { Button } from "@/app/shared/components/ui/button";
@@ -22,6 +23,8 @@ import { signIn } from "../auth.service";
  * @returns JSX element representing the login module
  */
 export const LoginModule = () => {
+  const t = useTranslations();
+  const locale = useLocale();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -38,9 +41,9 @@ export const LoginModule = () => {
     setError(null);
 
     try {
-      await signIn(data.email, data.password);
+      await signIn(data.email, data.password, locale);
     } catch (err: unknown) {
-      setError((err as Error).message || "Login failed");
+      setError((err as Error).message || t("auth_login_error"));
     } finally {
       setIsLoading(false);
     }
@@ -49,14 +52,16 @@ export const LoginModule = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       {/* new field component */}
-      <h1 className="text-3xl font-bold text-center">Login</h1>
+      <h1 className="text-3xl font-bold text-center">
+        {t("auth_login_title")}
+      </h1>
       <Field>
-        <FieldLabel htmlFor="email">Email</FieldLabel>
+        <FieldLabel htmlFor="email">{t("auth_login_label_email")}</FieldLabel>
         <Input
           {...register("email")}
           id="email"
           type="email"
-          placeholder="Email"
+          placeholder={t("auth_login_placeholder_email")}
         />
         {/* allows to display multiple errors in the same field */}
         {/* convert to an array  */}
@@ -64,12 +69,14 @@ export const LoginModule = () => {
       </Field>
 
       <Field>
-        <FieldLabel htmlFor="password">Password</FieldLabel>
+        <FieldLabel htmlFor="password">
+          {t("auth_login_label_password")}
+        </FieldLabel>
         <Input
           {...register("password")}
           id="password"
           type="password"
-          placeholder="Password"
+          placeholder={t("auth_login_placeholder_password")}
         />
         <FieldError errors={errors.password ? [errors.password] : []} />
       </Field>
@@ -77,7 +84,7 @@ export const LoginModule = () => {
       {error && <div className="text-red-500 text-sm">{error}</div>}
 
       <Button type="submit" disabled={isLoading}>
-        {isLoading ? "Logging in..." : "Login"}
+        {isLoading ? t("auth_login_button_loading") : t("auth_login_button")}
       </Button>
     </form>
   );

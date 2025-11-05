@@ -1,6 +1,7 @@
 "use client";
 
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { commentsInfiniteQueryOptions } from "@/app/entities/api";
 import { Comment } from "./comment.component";
 import { CommentSkeleton } from "./skeleton.component";
@@ -17,6 +18,7 @@ interface ICommentListProps {
  * @returns JSX element representing the comment list
  */
 export const CommentList = ({ postId }: ICommentListProps) => {
+  const t = useTranslations();
   const query = useInfiniteQuery(commentsInfiniteQueryOptions(postId));
 
   if (query.status === "pending") {
@@ -30,7 +32,7 @@ export const CommentList = ({ postId }: ICommentListProps) => {
   }
 
   if (query.status === "error") {
-    return <div className="text-red-500">Failed to load comments</div>;
+    return <div className="text-red-500">{t("comment_load_error")}</div>;
   }
 
   const items = query.data.pages.flatMap((p) => p.comments);
@@ -47,7 +49,9 @@ export const CommentList = ({ postId }: ICommentListProps) => {
           disabled={query.isFetchingNextPage}
           className="mt-4 px-4 py-2 bg-primary text-primary-foreground
             rounded-md hover:bg-primary/90 disabled:opacity-50">
-          {query.isFetchingNextPage ? "Loading…" : "Load more"}
+          {query.isFetchingNextPage
+            ? t("comment_loading_more")
+            : t("comment_load_more")}
         </button>
       )}
     </div>

@@ -1,13 +1,6 @@
-import type { Metadata } from "next";
 import { LoginModule } from "@/app/modules/auth";
 
 import { PageContainer } from "@/app/shared/components/page-container";
-
-/** Login page metadata configuration */
-export const metadata: Metadata = {
-  title: "Login",
-  description: "Sign in to your account",
-};
 
 /**
  * Login page component.
@@ -21,7 +14,7 @@ export const metadata: Metadata = {
 const LoginPage = () => {
   return (
     <PageContainer>
-      <div className="space-y-6">
+      <div className="mx-auto max-w-md space-y-6">
         <LoginModule />
       </div>
     </PageContainer>
