@@ -1,12 +1,19 @@
 import { NextResponse } from "next/server";
 import { db, posts, user } from "@/pkg/libraries/drizzle";
 import { eq } from "drizzle-orm";
+import { requireSession } from "../../lib";
 
 export async function GET(
-  _request: Request,
+  request: Request,
   ctx: { params: Promise<{ id: string }> },
 ) {
   try {
+    // Verify authentication
+    const authResult = await requireSession(request);
+    if (authResult instanceof NextResponse) {
+      return authResult;
+    }
+
     const { id } = await ctx.params;
     const postWithAuthor = await db
       .select({

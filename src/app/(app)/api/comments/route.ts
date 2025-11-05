@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { and, desc, eq, sql } from "drizzle-orm";
-import { auth } from "@/pkg/libraries/better-auth";
-import { headers } from "next/headers";
+import { requireSession } from "../lib";
 import { db, comments, posts, user } from "@/pkg/libraries/drizzle";
 
 /**
@@ -10,6 +9,12 @@ import { db, comments, posts, user } from "@/pkg/libraries/drizzle";
  */
 export async function GET(request: Request) {
   try {
+    // Verify authentication
+    const authResult = await requireSession(request);
+    if (authResult instanceof NextResponse) {
+      return authResult;
+    }
+
     const { searchParams } = new URL(request.url);
     const postId = searchParams.get("postId");
     const page = Number(searchParams.get("page") ?? 1);
@@ -80,10 +85,12 @@ export async function GET(request: Request) {
  */
 export async function POST(request: Request) {
   try {
-    const session = await auth.api.getSession({ headers: await headers() });
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    // Verify authentication
+    const authResult = await requireSession(request);
+    if (authResult instanceof NextResponse) {
+      return authResult;
     }
+    const { session } = authResult;
 
     const body = await request.json();
     const { postId, content } = body ?? {};
