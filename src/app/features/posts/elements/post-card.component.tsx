@@ -43,7 +43,7 @@ export const PostCard = ({ post }: IPostCardProps) => {
       {/* Post Header */}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-2xl font-semibold text-foreground">
-          <Link className="hover:underline" href={`/posts/${post.id}`}>
+          <Link className="hover:underline" href={`posts/${post.id}`}>
             {post.title}
           </Link>
         </h2>

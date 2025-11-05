@@ -17,7 +17,8 @@ export const signIn = async (
   password: string,
   locale?: string,
 ) => {
-  const callbackURL = locale && locale !== "en" ? `/${locale}` : "/";
+  // Always include locale in callback URL to preserve locale context
+  const callbackURL = locale ? `/${locale}` : "/";
 
   const { data, error } = await authClient.signIn.email({
     email,
@@ -51,7 +52,8 @@ export const signUp = async (
   password: string,
   locale?: string,
 ) => {
-  const callbackURL = locale && locale !== "en" ? `/${locale}` : "/";
+  // Always include locale in callback URL to preserve locale context
+  const callbackURL = locale ? `/${locale}` : "/";
 
   const { data, error } = await authClient.signUp.email({
     email,
