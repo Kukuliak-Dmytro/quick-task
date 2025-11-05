@@ -13,16 +13,16 @@ import { useState } from "react";
 import { signUp } from "../auth.service";
 
 /**
- * RegisterForm component for user registration.
+ * RegisterModule component for user registration.
  *
  * This component provides a form for new users to create an account with their name,
  * email, and password. It includes form validation using React Hook Form and Zod,
  * error handling, and loading states. The form automatically redirects users after
  * successful registration.
  *
- * @returns JSX element representing the registration form
+ * @returns JSX element representing the registration module
  */
-export const RegisterForm = () => {
+export const RegisterModule = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -49,6 +49,7 @@ export const RegisterForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <h1 className="text-3xl font-bold text-center">Register</h1>
       <Field>
         <FieldLabel htmlFor="name">Name</FieldLabel>
         <Input {...register("name")} id="name" type="text" placeholder="Name" />

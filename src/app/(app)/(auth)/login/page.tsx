@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import { LoginForm } from "@/app/modules/auth/elements/login-form.component";
+import { LoginModule } from "@/app/modules/auth";
+
+import { PageContainer } from "@/app/shared/components/page-container";
 
 /** Login page metadata configuration */
 export const metadata: Metadata = {
@@ -11,17 +13,18 @@ export const metadata: Metadata = {
  * Login page component.
  *
  * This page provides the user interface for user authentication, including
- * the login form and page title. It's designed to be simple and focused
+ * the login module and page title. It's designed to be simple and focused
  * on the authentication process.
  *
  * @returns JSX element representing the login page
  */
 const LoginPage = () => {
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold text-center">Login</h1>
-      <LoginForm />
-    </div>
+    <PageContainer>
+      <div className="space-y-6">
+        <LoginModule />
+      </div>
+    </PageContainer>
   );
 };
 

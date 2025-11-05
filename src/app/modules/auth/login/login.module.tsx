@@ -13,15 +13,15 @@ import { useState } from "react";
 import { signIn } from "../auth.service";
 
 /**
- * LoginForm component for user authentication.
+ * LoginModule component for user authentication.
  *
  * This component provides a form for users to sign in with their email and password.
  * It includes form validation using React Hook Form and Zod, error handling, and loading states.
  * The form automatically redirects users after successful authentication.
  *
- * @returns JSX element representing the login form
+ * @returns JSX element representing the login module
  */
-export const LoginForm = () => {
+export const LoginModule = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -49,6 +49,7 @@ export const LoginForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       {/* new field component */}
+      <h1 className="text-3xl font-bold text-center">Login</h1>
       <Field>
         <FieldLabel htmlFor="email">Email</FieldLabel>
         <Input

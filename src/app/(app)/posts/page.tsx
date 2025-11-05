@@ -1,5 +1,11 @@
-import { PostsPageComponent } from "@/app/modules/posts/posts-page/posts-page.component";
+import { PostsModule } from "@/app/modules/posts";
+
+import { PageContainer } from "@/app/shared/components/page-container";
 
 export default async function PostsPage() {
-  return <PostsPageComponent />;
+  return (
+    <PageContainer>
+      <PostsModule />
+    </PageContainer>
+  );
 }

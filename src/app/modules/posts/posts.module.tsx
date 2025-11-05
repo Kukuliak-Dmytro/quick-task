@@ -4,15 +4,15 @@ import { postsInfiniteQueryOptions } from "@/app/entities/api";
 import { PostList } from "@/app/widgets/posts";
 
 /**
- * Main posts page component with server-side data fetching.
+ * PostsModule component with server-side data fetching.
  *
  * This component handles server-side data prefetching and renders the posts page
  * with full functionality. It orchestrates the PostList widget and provides
  * hydration boundary for optimal performance with infinite query support.
  *
- * @returns Promise that resolves to JSX element representing the posts page
+ * @returns Promise that resolves to JSX element representing the posts module
  */
-export const PostsPageComponent = async () => {
+export const PostsModule = async () => {
   const queryClient = getQueryClient();
 
   // Prefetch the first page of posts data on the server
@@ -31,4 +31,3 @@ export const PostsPageComponent = async () => {
   );
 };
 
-export default PostsPageComponent;

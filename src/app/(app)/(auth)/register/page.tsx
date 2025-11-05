@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import { RegisterForm } from "@/app/modules/auth/elements/register-form.component";
+import { RegisterModule } from "@/app/modules/auth";
+
+import { PageContainer } from "@/app/shared/components/page-container";
 
 /** Register page metadata configuration */
 export const metadata: Metadata = {
@@ -11,17 +13,18 @@ export const metadata: Metadata = {
  * Register page component.
  *
  * This page provides the user interface for user registration, including
- * the registration form and page title. It's designed to be simple and focused
+ * the registration module and page title. It's designed to be simple and focused
  * on the account creation process.
  *
  * @returns JSX element representing the register page
  */
 const RegisterPage = () => {
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold text-center">Register</h1>
-      <RegisterForm />
-    </div>
+    <PageContainer>
+      <div className="space-y-6">
+        <RegisterModule />
+      </div>
+    </PageContainer>
   );
 };
 
