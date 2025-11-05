@@ -1,6 +1,5 @@
 import type { FC } from "react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { ModeToggle } from "@/app/features/theme-switcher/theme-switcher";
 
 // interface
 interface IProps {

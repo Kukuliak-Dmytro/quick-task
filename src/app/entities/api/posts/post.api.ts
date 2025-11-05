@@ -1,4 +1,4 @@
-import { restApiFetcher } from "@/pkg/libraries/rest-api/fetcher";
+import { webFetcher } from "@/pkg/libraries/rest-api/web-fetcher";
 import { IPostsResponse } from "@/app/entities/models";
 
 /**
@@ -39,5 +39,5 @@ export const getPosts = async (
   const queryString = searchParams.toString();
   const url = queryString ? `posts?${queryString}` : "posts";
 
-  return await restApiFetcher.get(url).json<IPostsResponse>();
+  return await webFetcher.get(url).json<IPostsResponse>();
 };

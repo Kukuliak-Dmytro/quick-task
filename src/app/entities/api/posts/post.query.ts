@@ -26,9 +26,10 @@ export const postsInfiniteQueryOptions = () => {
       return await getPosts({ page: pageParam, limit: 5 });
     },
     getNextPageParam: (lastPage) => {
-      return lastPage.pagination.hasNextPage
-        ? lastPage.pagination.page + 1
-        : undefined;
+      if (!lastPage?.pagination?.hasNextPage) {
+        return undefined;
+      }
+      return lastPage.pagination.page + 1;
     },
     initialPageParam: 1,
   });

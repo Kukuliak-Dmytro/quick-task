@@ -16,7 +16,13 @@ export const PostsPageComponent = async () => {
   const queryClient = getQueryClient();
 
   // Prefetch the first page of posts data on the server
-  await queryClient.prefetchInfiniteQuery(postsInfiniteQueryOptions());
+  // Gracefully handle 401 errors (server doesn't have cookies)
+  // Client will fetch with cookies properly
+  try {
+    await queryClient.prefetchInfiniteQuery(postsInfiniteQueryOptions());
+  } catch (error) {
+    console.error("Failed to prefetch posts:", error);
+  }
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

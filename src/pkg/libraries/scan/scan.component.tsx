@@ -15,6 +15,7 @@ export const ScanComponent: FC<Readonly<IProps>> = (props) => {
   useEffect(() => {
     if (isDev) {
       scan({
+        trackUnnecessaryRenders: true,
         showToolbar: isDev,
         enabled: isDev,
       });

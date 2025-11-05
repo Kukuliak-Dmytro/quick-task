@@ -32,9 +32,12 @@ const makeQueryClient = () => {
 // query client
 export const getQueryClient = () => {
   if (isServer) {
-    return makeQueryClient();
+    const serverClient = makeQueryClient();
+    return serverClient;
   } else {
-    if (!browserQueryClient) browserQueryClient = makeQueryClient();
+    if (!browserQueryClient) {
+      browserQueryClient = makeQueryClient();
+    }
     return browserQueryClient;
   }
 };

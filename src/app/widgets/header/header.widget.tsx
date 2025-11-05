@@ -3,6 +3,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ModeToggle } from "@/app/features/theme-switcher/theme-switcher";
 import { cn } from "@/app/shared/utils/utils";
+import { signOut } from "@/app/modules/auth/auth.service";
+import { Button } from "@/app/shared/components/ui/button";
 
 // component
 export const HeaderComponent = () => {
@@ -13,6 +15,15 @@ export const HeaderComponent = () => {
       setMounted(true);
     }, 100);
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      window.location.href = "/login";
+    } catch (error) {
+      console.error("Failed to logout:", error);
+    }
+  };
 
   return (
     <header className="border-b">
@@ -28,7 +39,12 @@ export const HeaderComponent = () => {
             Posts
           </Link>
         </div>
-        {mounted && <ModeToggle />}
+        <div className="flex items-center gap-4">
+          {mounted && <ModeToggle />}
+          <Button variant="outline" onClick={handleLogout}>
+            Logout
+          </Button>
+        </div>
       </nav>
     </header>
   );
