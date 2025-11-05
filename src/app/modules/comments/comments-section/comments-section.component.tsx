@@ -1,5 +1,5 @@
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
-import { getQueryClient } from "@/app/shared/lib/utils/get-query-client";
+import { getQueryClient } from "@/pkg/libraries/rest-api/service/rest-api.service";
 import { commentsInfiniteQueryOptions } from "@/app/entities/api";
 import { CommentList } from "@/app/widgets/comments";
 

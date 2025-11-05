@@ -1,5 +1,5 @@
-import { http } from "@/app/shared/lib/utils/fetcher";
-import { IPost } from "@/app/shared/interfaces";
+import { restApiFetcher } from "@/pkg/libraries/rest-api/fetcher";
+import { IPost } from "@/app/entities/models";
 
 /**
  * Interface for creating a new post.
@@ -26,5 +26,5 @@ export interface ICreatePostData {
  * @throws {Error} Throws an error if the API request fails
  */
 export const createPost = async (data: ICreatePostData): Promise<IPost> => {
-  return await http.post("posts", { json: data }).json<IPost>();
+  return await restApiFetcher.post("posts", { json: data }).json<IPost>();
 };

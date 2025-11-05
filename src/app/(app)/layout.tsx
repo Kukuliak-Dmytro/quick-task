@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { gothic, franklin } from "@/config/fonts";
 import "@/config/styles/globals.css";
-import { Providers } from "@/app/(app)/providers";
+import { LayoutModule } from "@/app/modules/layout/layout.module";
 import { ScanComponent } from "@/pkg/libraries/scan/scan.component";
 import { envServer } from "@/config/envs";
-
+import { RestApiProvider } from "@/pkg/libraries/rest-api/provider";
+import { UiProvider } from "@/pkg/libraries/ui";
 /** Application metadata configuration */
 export const metadata: Metadata = {
   title: "Quick Task",
@@ -28,9 +29,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <ScanComponent isDev={envServer.NODE_ENV !== "production"} />
       <body className={`${gothic.className} ${franklin.className} antialiased`}>
-        <ScanComponent isDev={envServer.NODE_ENV !== "production"} />
-        <Providers>{children}</Providers>
+        <RestApiProvider>
+          <UiProvider>
+            <LayoutModule>{children}</LayoutModule>
+          </UiProvider>
+        </RestApiProvider>
       </body>
     </html>
   );

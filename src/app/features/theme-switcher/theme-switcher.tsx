@@ -38,7 +38,7 @@ export function ModeToggle() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="absolute top-4 right-4 z-50" asChild>
+      <DropdownMenuTrigger asChild>
         <Button variant="outline" size="icon">
           <Sun
             className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all

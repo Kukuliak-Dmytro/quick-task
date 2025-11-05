@@ -1,5 +1,5 @@
-import { http } from "@/app/shared/lib/utils/fetcher";
-import { IPostsResponse } from "@/app/shared/interfaces";
+import { restApiFetcher } from "@/pkg/libraries/rest-api/fetcher";
+import { IPostsResponse } from "@/app/entities/models";
 
 /**
  * Parameters for fetching posts with pagination support.
@@ -39,5 +39,5 @@ export const getPosts = async (
   const queryString = searchParams.toString();
   const url = queryString ? `posts?${queryString}` : "posts";
 
-  return await http.get(url).json<IPostsResponse>();
+  return await restApiFetcher.get(url).json<IPostsResponse>();
 };

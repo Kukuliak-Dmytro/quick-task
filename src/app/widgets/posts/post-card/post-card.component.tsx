@@ -1,6 +1,6 @@
 "use client";
 
-import { IPost } from "@/app/shared/interfaces";
+import { IPost } from "@/app/entities/models";
 import {
   Accordion,
   AccordionContent,
