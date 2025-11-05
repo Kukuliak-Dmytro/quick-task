@@ -1,7 +1,4 @@
-import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
-import { getQueryClient } from "@/pkg/libraries/rest-api/service/rest-api.service";
-import { commentsInfiniteQueryOptions } from "@/app/entities/api";
-import { CommentList } from "@/app/widgets/comments";
+import { CommentList, CreateComment } from "./elements/";
 
 // interface
 interface ICommentsSectionProps {
@@ -12,19 +9,20 @@ interface ICommentsSectionProps {
  * CommentsSection feature component.
  *
  * Server component: prefetch comments for a post and hydrate on client.
- * This is a reusable feature that can be used across different modules.
+ * This feature brings together all comment-related elements:
+ * - Create comment form
+ * - Comment list with infinite scroll
+ * - Individual comment display
+ * - Loading skeletons
  *
  * @param props - Component props containing the post ID
  * @returns Promise that resolves to JSX element representing the comments section
  */
 export const CommentsSection = async ({ postId }: ICommentsSectionProps) => {
-  const queryClient = getQueryClient();
-  await queryClient.prefetchInfiniteQuery(commentsInfiniteQueryOptions(postId));
-
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
+    <div className="space-y-6">
+      <CreateComment postId={postId} />
       <CommentList postId={postId} />
-    </HydrationBoundary>
+    </div>
   );
 };
-

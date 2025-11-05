@@ -1,33 +1,12 @@
-import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
-import { getQueryClient } from "@/pkg/libraries/rest-api/service/rest-api.service";
-import { postsInfiniteQueryOptions } from "@/app/entities/api";
-import { PostList } from "@/app/widgets/posts";
+import { PostsSection } from "@/app/features/posts";
 
 /**
- * PostsModule component with server-side data fetching.
+ * PostsModule component.
  *
- * This component handles server-side data prefetching and renders the posts page
- * with full functionality. It orchestrates the PostList widget and provides
- * hydration boundary for optimal performance with infinite query support.
+ * This module renders the posts section feature with all post-related functionality.
  *
  * @returns Promise that resolves to JSX element representing the posts module
  */
 export const PostsModule = async () => {
-  const queryClient = getQueryClient();
-
-  // Prefetch the first page of posts data on the server
-  // Gracefully handle 401 errors (server doesn't have cookies)
-  // Client will fetch with cookies properly
-  try {
-    await queryClient.prefetchInfiniteQuery(postsInfiniteQueryOptions());
-  } catch (error) {
-    console.error("Failed to prefetch posts:", error);
-  }
-
-  return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <PostList />
-    </HydrationBoundary>
-  );
+  return <PostsSection />;
 };
-

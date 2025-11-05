@@ -1,2 +1,1 @@
-export { HomeModule } from "./home.module";
-
+export { default as HomeModule } from "./home.module";

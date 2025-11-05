@@ -2,12 +2,12 @@
 
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { postsInfiniteQueryOptions } from "@/app/entities/api";
-import { PostCard } from "../post-card/post-card.component";
+import { PostCard } from "./post-card.component";
+import { PostCardSkeleton } from "./post-card-skeleton.component";
 import { CreatePostForm } from "@/app/features/create-post";
 import { Button } from "@/app/shared/components/ui/button";
 import { cn } from "@/app/shared/utils/utils";
 import { useCallback } from "react";
-import Link from "next/link";
 
 /**
  * PostList component for displaying posts with infinite scroll.
@@ -53,18 +53,7 @@ export const PostList = () => {
 
         <div className="space-y-6">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div
-              key={i}
-              className={cn(
-                "border border-border rounded-lg p-6 bg-card animate-pulse",
-              )}>
-              <div className="h-6 w-2/3 bg-muted mb-4 rounded" />
-              <div className="space-y-2">
-                <div className="h-4 bg-muted rounded" />
-                <div className="h-4 bg-muted rounded w-5/6" />
-                <div className="h-4 bg-muted rounded w-4/6" />
-              </div>
-            </div>
+            <PostCardSkeleton key={i} />
           ))}
         </div>
       </div>
@@ -112,14 +101,7 @@ export const PostList = () => {
       ) : (
         <div className="flex flex-col gap-6">
           {allPosts.map((post) => (
-            <div key={post.id}>
-              <PostCard post={post} />
-              <div className="mt-2">
-                <Link className="text-sm underline" href={`/posts/${post.id}`}>
-                  View details
-                </Link>
-              </div>
-            </div>
+            <PostCard key={post.id} post={post} />
           ))}
 
           {/* Load More Button */}

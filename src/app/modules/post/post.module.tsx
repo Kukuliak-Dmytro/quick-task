@@ -4,8 +4,8 @@ import {
   commentsInfiniteQueryOptions,
   postByIdQueryOptions,
 } from "@/app/entities/api";
-import { PostDetails } from "@/app/widgets/posts/post-details/post-details.component";
-import { CommentList } from "@/app/widgets/comments";
+import { PostDetails } from "./elements/post-details.component";
+import { CommentsSection } from "@/app/features/comments-section";
 
 // interface
 interface IPostModuleProps {
@@ -25,7 +25,7 @@ export const PostModule = async ({ postId }: IPostModuleProps) => {
   const queryClient = getQueryClient();
 
   //this enables fetching in parallel
-  await Promise.all([
+  await Promise.allSettled([
     queryClient.prefetchQuery(postByIdQueryOptions(postId)),
     queryClient.prefetchInfiniteQuery(commentsInfiniteQueryOptions(postId)),
   ]);
@@ -35,9 +35,8 @@ export const PostModule = async ({ postId }: IPostModuleProps) => {
       <div className="container mx-auto px-4 py-8 max-w-3xl">
         <PostDetails postId={postId} />
         <h3 className="mt-8 mb-2 text-xl font-semibold">Comments</h3>
-        <CommentList postId={postId} />
+        <CommentsSection postId={postId} />
       </div>
     </HydrationBoundary>
   );
 };
-

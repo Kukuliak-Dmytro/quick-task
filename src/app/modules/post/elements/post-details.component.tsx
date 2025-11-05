@@ -1,13 +1,43 @@
 "use client";
 
-import { IPost } from "@/app/entities/models";
+import { useQuery } from "@tanstack/react-query";
+import { postByIdQueryOptions } from "@/app/entities/api";
 import Link from "next/link";
+import { PostDetailsSkeleton } from "./post-details-skeleton.component";
 
-interface IPostFullCardProps {
-  post: IPost;
+// interface
+interface IPostDetailsProps {
+  postId: string;
 }
 
-export const PostFullCard = ({ post }: IPostFullCardProps) => {
+/**
+ * PostDetails component for displaying a single post with full content.
+ *
+ * This component fetches a post by ID, handles loading and error states,
+ * and displays the full post content. Similar to how CommentList handles
+ * fetching and rendering comments.
+ *
+ * @param props - Component props containing the post ID
+ * @returns JSX element representing the post details
+ */
+export const PostDetails = ({ postId }: IPostDetailsProps) => {
+  const { data: post, status, error } = useQuery(postByIdQueryOptions(postId));
+
+  // Loading state
+  if (status === "pending") {
+    return <PostDetailsSkeleton />;
+  }
+
+  // Error state
+  if (status === "error") {
+    return (
+      <div className="text-red-500">
+        {error instanceof Error ? error.message : "Error loading post"}
+      </div>
+    );
+  }
+
+  // Success state - render the post
   const formattedDate = new Date(post.createdAt).toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
@@ -61,5 +91,3 @@ export const PostFullCard = ({ post }: IPostFullCardProps) => {
     </article>
   );
 };
-
-export default PostFullCard;

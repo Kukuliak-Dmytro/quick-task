@@ -1,12 +1,6 @@
 "use client";
 
 import { IPost } from "@/app/entities/models";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/app/shared/components/ui/accordion";
 import Link from "next/link";
 
 /**
@@ -20,10 +14,9 @@ interface IPostCardProps {
 }
 
 /**
- * PostCard component for displaying a single post with accordion for full content.
+ * PostCard component for displaying a single post preview.
  *
- * This component renders a post card with a collapsible accordion that shows
- * a truncated preview of the content and allows users to expand to see the full text.
+ * This component renders a post card with a truncated preview of the content.
  * The component includes post metadata such as author, date, and publication status.
  *
  * @param props - The component props
@@ -70,22 +63,11 @@ export const PostCard = ({ post }: IPostCardProps) => {
         )}
       </div>
 
-      {/* Post Content with Accordion */}
+      {/* Post Content Preview */}
       <div className="mb-4">
-        <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value="content" className="border-none">
-            <AccordionTrigger className="text-left hover:no-underline py-2">
-              <div className="text-muted-foreground">
-                <p className="line-clamp-3">{truncatedContent}</p>
-              </div>
-            </AccordionTrigger>
-            <AccordionContent className="pt-4">
-              <div className="text-muted-foreground whitespace-pre-wrap">
-                {post.content}
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+        <div className="text-muted-foreground">
+          <p className="line-clamp-3">{truncatedContent}</p>
+        </div>
       </div>
 
       {/* Post Footer */}

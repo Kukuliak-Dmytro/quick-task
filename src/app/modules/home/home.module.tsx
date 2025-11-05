@@ -7,7 +7,7 @@ import Link from "next/link";
  *
  * @returns JSX element representing the home module
  */
-export const HomeModule = () => {
+const HomeModule = () => {
   return (
     <div className="flex min-h-screen items-center justify-center">
       <div className="text-center">
@@ -27,3 +27,4 @@ export const HomeModule = () => {
   );
 };
 
+export default HomeModule;
