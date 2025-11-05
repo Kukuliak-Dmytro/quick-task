@@ -10,7 +10,6 @@ import { PostList } from "./elements/post-list.component";
  * This feature brings together all post-related elements:
  * - Post list with infinite scroll
  * - Post cards
- * - Post details
  * - Create post functionality
  *
  * @returns Promise that resolves to JSX element representing the posts section

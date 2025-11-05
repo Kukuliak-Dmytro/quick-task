@@ -1,2 +1,2 @@
-export { PostDetails } from "./post-details.component";
-export { PostDetailsSkeleton } from "./post-details-skeleton.component";
+export { FullPost } from "./full-post.component";
+export { FullPostSkeleton } from "./full-post-skeleton.component";

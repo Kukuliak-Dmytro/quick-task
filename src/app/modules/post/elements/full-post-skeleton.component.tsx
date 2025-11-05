@@ -1,9 +1,9 @@
 /**
- * PostDetailsSkeleton component for displaying loading state of post details.
+ * FullPostSkeleton component for displaying loading state of full post.
  *
- * @returns JSX element representing post details skeleton loader
+ * @returns JSX element representing full post skeleton loader
  */
-export const PostDetailsSkeleton = () => {
+export const FullPostSkeleton = () => {
   return (
     <div className="border border-border rounded-lg p-6 bg-card animate-pulse">
       <div className="flex items-center justify-between mb-4">
@@ -21,3 +21,4 @@ export const PostDetailsSkeleton = () => {
     </div>
   );
 };
+

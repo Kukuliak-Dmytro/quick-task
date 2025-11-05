@@ -4,7 +4,7 @@ import {
   commentsInfiniteQueryOptions,
   postByIdQueryOptions,
 } from "@/app/entities/api";
-import { PostDetails } from "./elements/post-details.component";
+import { FullPost } from "./elements/full-post.component";
 import { CommentsSection } from "@/app/features/comments-section";
 
 // interface
@@ -33,7 +33,7 @@ export const PostModule = async ({ postId }: IPostModuleProps) => {
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div className="container mx-auto px-4 py-8 max-w-3xl">
-        <PostDetails postId={postId} />
+        <FullPost postId={postId} />
         <h3 className="mt-8 mb-2 text-xl font-semibold">Comments</h3>
         <CommentsSection postId={postId} />
       </div>

@@ -2,7 +2,7 @@ import { PostModule } from "@/app/modules/post";
 
 import { PageContainer } from "@/app/shared/components/page-container";
 
-export default async function PostDetailsPage(props: {
+export default async function FullPostPage(props: {
   params: Promise<{ id: string }>;
 }) {
   // await requireAuth();

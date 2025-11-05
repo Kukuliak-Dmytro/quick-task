@@ -3,29 +3,29 @@
 import { useQuery } from "@tanstack/react-query";
 import { postByIdQueryOptions } from "@/app/entities/api";
 import Link from "next/link";
-import { PostDetailsSkeleton } from "./post-details-skeleton.component";
+import { FullPostSkeleton } from "./full-post-skeleton.component";
 
 // interface
-interface IPostDetailsProps {
+interface IFullPostProps {
   postId: string;
 }
 
 /**
- * PostDetails component for displaying a single post with full content.
+ * FullPost component for displaying a single post with full content.
  *
  * This component fetches a post by ID, handles loading and error states,
  * and displays the full post content. Similar to how CommentList handles
  * fetching and rendering comments.
  *
  * @param props - Component props containing the post ID
- * @returns JSX element representing the post details
+ * @returns JSX element representing the full post
  */
-export const PostDetails = ({ postId }: IPostDetailsProps) => {
+export const FullPost = ({ postId }: IFullPostProps) => {
   const { data: post, status, error } = useQuery(postByIdQueryOptions(postId));
 
   // Loading state
   if (status === "pending") {
-    return <PostDetailsSkeleton />;
+    return <FullPostSkeleton />;
   }
 
   // Error state
@@ -91,3 +91,4 @@ export const PostDetails = ({ postId }: IPostDetailsProps) => {
     </article>
   );
 };
+
