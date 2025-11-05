@@ -91,4 +91,3 @@ export const FullPost = ({ postId }: IFullPostProps) => {
     </article>
   );
 };
-
