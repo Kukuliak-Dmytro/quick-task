@@ -1,20 +1,13 @@
 import { type InferSelectModel } from "drizzle-orm";
-import { comments } from "@/app/shared/lib/db/schemas";
-
+import { comments } from "@/pkg/libraries/drizzle";
+import type { IUser } from "./user.model";
 /**
  * Base comment type inferred from the database schema.
  */
 type BaseComment = InferSelectModel<typeof comments>;
 
-export interface ICommentAuthor {
-  id: string;
-  name: string;
-  email: string;
-  image: string | null;
-}
-
 export interface IComment extends BaseComment {
-  author: ICommentAuthor | null;
+  author: IUser | null;
 }
 
 export interface ICommentsResponse {

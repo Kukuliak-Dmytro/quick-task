@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { db } from "@/app/shared/lib/db/database";
-import { posts, user } from "@/app/shared/lib/db/schemas";
+import { db, posts, user } from "@/pkg/libraries/drizzle";
 import { eq } from "drizzle-orm";
 
 export async function GET(

@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
-import { db } from "@/app/shared/lib/db/database";
-import { posts, user } from "@/app/shared/lib/db/schemas";
+import { db, posts, user } from "@/pkg/libraries/drizzle";
 import { desc, eq, count } from "drizzle-orm";
-import { auth } from "@/app/shared/lib/db/auth";
+import { auth } from "@/pkg/libraries/better-auth";
 
 /**
  * GET /api/posts
@@ -53,7 +52,6 @@ export async function GET(request: Request) {
           id: user.id,
           name: user.name,
           email: user.email,
-          image: user.image,
         },
       })
       .from(posts)
@@ -153,7 +151,6 @@ export async function POST(request: Request) {
           id: user.id,
           name: user.name,
           email: user.email,
-          image: user.image,
         },
       })
       .from(posts)

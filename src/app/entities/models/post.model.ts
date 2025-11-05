@@ -1,5 +1,5 @@
 import { type InferSelectModel } from "drizzle-orm";
-import { posts } from "@/app/shared/lib/db/schemas";
+import { posts } from "@/pkg/libraries/drizzle";
 import type { IUser } from "./user.model";
 /**
  * Base post type inferred from the database schema.

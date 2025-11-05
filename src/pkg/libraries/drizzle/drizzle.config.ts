@@ -11,9 +11,9 @@ import { envServer } from "@/config/envs";
  */
 export default defineConfig({
   // schema to use
-  schema: "./src/shared/lib/db/schemas/index.ts",
+  schema: "./src/pkg/libraries/drizzle/schemas/index.ts",
   // output directory for migrations
-  out: "./migrations",
+  out: "./src/pkg/libraries/drizzle/migrations",
   // dialect to use
   dialect: "postgresql",
   dbCredentials: {

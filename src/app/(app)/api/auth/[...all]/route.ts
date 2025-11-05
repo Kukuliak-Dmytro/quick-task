@@ -1,4 +1,4 @@
-import { auth } from "@/app/shared/lib/db/auth";
+import { auth } from "@/pkg/libraries/better-auth";
 import { toNextJsHandler } from "better-auth/next-js";
 
 /**

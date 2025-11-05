@@ -1,4 +1,4 @@
-import { authClient } from "@/app/shared/lib/db/auth-client";
+import { authClient } from "@/pkg/libraries/better-auth/auth-client";
 
 /**
  * Signs in a user with email and password.

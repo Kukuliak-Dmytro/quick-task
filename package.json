@@ -12,9 +12,9 @@
     "lint": "eslint",
     "prettier": "prettier --check .",
     "format": "prettier --write . && eslint --fix .",
-    "db:generate": "drizzle-kit generate --config src/shared/lib/db/drizzle.config.ts",
-    "db:migrate": "drizzle-kit migrate --config src/shared/lib/db/drizzle.config.ts",
-    "db:studio": "drizzle-kit studio --config src/shared/lib/db/drizzle.config.ts"
+    "db:generate": "drizzle-kit generate --config src/pkg/libraries/drizzle/drizzle.config.ts",
+    "db:migrate": "drizzle-kit migrate --config src/pkg/libraries/drizzle/drizzle.config.ts",
+    "db:studio": "drizzle-kit studio --config src/pkg/libraries/drizzle/drizzle.config.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -42,6 +42,7 @@
     "react-dom": "19.2.0",
     "react-hook-form": "^7.65.0",
     "react-scan": "^0.4.3",
+    "server-only": "^0.0.1",
     "tailwind-merge": "^3.3.1",
     "zod": "^4.1.12"
   },
