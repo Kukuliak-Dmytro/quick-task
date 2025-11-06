@@ -7,6 +7,8 @@
   "home_welcome": "Ласкаво просимо",
   "home_description": "Почніть з перегляду постів",
   "home_view_posts": "Переглянути пости",
+  "home_test_sentry": "Тест Sentry (Помилка сервера)",
+  "home_test_sentry_client": "Тест Sentry (Помилка клієнта)",
   "create_post_title": "Створити новий пост",
   "create_post_button": "Створити новий пост",
   "create_post_cancel": "Скасувати",

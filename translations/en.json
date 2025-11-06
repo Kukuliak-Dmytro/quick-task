@@ -7,6 +7,8 @@
   "home_welcome": "Welcome",
   "home_description": "Get started by exploring the posts",
   "home_view_posts": "View Posts",
+  "home_test_sentry": "Test Sentry (Server Error)",
+  "home_test_sentry_client": "Test Sentry (Client Error)",
   "create_post_title": "Create New Post",
   "create_post_button": "Create New Post",
   "create_post_cancel": "Cancel",
