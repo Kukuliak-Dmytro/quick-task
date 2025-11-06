@@ -5,16 +5,13 @@ import { notFound } from "next/navigation";
 import { HomeModule } from "@/app/modules/home";
 import { PageContainer } from "@/app/shared/components/page-container";
 import { routing } from "@/pkg/libraries/locale/routing";
-import {
-  configureServerSideGrowthBook,
-  getFeatureValue,
-} from "@/pkg/integrations/growthbook";
+import { getFeatureValue } from "@/pkg/integrations/growthbook";
 
 //interface
 interface IProps {
   params: Promise<{ locale: Locale }>;
 }
-
+export const revalidate = 30;
 //component
 /**
  * Home page component.
@@ -29,9 +26,6 @@ export const Home = async (props: IProps) => {
 
   // Enable static rendering
   setRequestLocale(locale);
-
-  // Configure GrowthBook
-  configureServerSideGrowthBook();
 
   const listViewType = await getFeatureValue<string>(
     "flag_recipe_list_view_optimization_v2",

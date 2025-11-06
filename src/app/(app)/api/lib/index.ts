@@ -1,1 +1,1 @@
-export { verifySession, requireSession } from "./auth.dal";
+export { requireSession, getUserId } from "./auth.dal";

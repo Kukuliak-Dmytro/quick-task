@@ -8,25 +8,14 @@ interface ISessionResult {
 
 //function
 /**
- * Verifies the user's session from the request headers.
- */
-export const verifySession = async (request: Request) => {
-  const session = await auth.api.getSession({
-    headers: request.headers,
-  });
-
-  //return
-  return session;
-};
-
-//function
-/**
  * Verifies the user's session and returns an error response if not authenticated.
  */
 export const requireSession = async (
   request: Request,
 ): Promise<ISessionResult | NextResponse> => {
-  const session = await verifySession(request);
+  const session = await auth.api.getSession({
+    headers: request.headers,
+  });
 
   if (!session) {
     //return
@@ -35,4 +24,22 @@ export const requireSession = async (
 
   //return
   return { session };
+};
+
+//function
+/**
+ * Gets the user ID from the session, or null if not authenticated.
+ */
+export const getUserId = async (request: Request): Promise<string | null> => {
+  const authResult = await requireSession(request);
+
+  // If requireSession returns NextResponse, user is not authenticated
+  if (authResult instanceof NextResponse) {
+    //return
+    return null;
+  }
+
+  // Extract and return user ID from session
+  //return
+  return authResult.session.user.id;
 };

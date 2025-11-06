@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { trackPageView } from "./mixpanel.events";
 import {
   initMixpanel,
@@ -8,21 +8,40 @@ import {
   flushMixpanel,
 } from "@/pkg/integrations/mixpanel/mixpanel.client";
 
-//interface
-interface IMixpanelInitializerProps {
-  userId: string | null;
-}
-
 //component
 /**
  * MixpanelInitializer component for client-side analytics setup.
+ * Fetches user ID from API route to avoid blocking static generation.
  */
-export const MixpanelInitializer = ({ userId }: IMixpanelInitializerProps) => {
+export const MixpanelInitializer = () => {
+  const [userId, setUserId] = useState<string | null | undefined>(undefined);
+
   useEffect(() => {
+    // Fetch user ID from API route
+    const fetchUserId = async () => {
+      try {
+        const response = await fetch("/api/user-id");
+        const data = await response.json();
+        setUserId(data.userId);
+      } catch (error) {
+        console.error("Error fetching user ID:", error);
+        setUserId(null);
+      }
+    };
+
+    fetchUserId();
+  }, []);
+
+  useEffect(() => {
+    // Wait until we've fetched the userId (even if it's null)
+    if (userId === undefined) {
+      return;
+    }
+
     const initializeMixpanel = async () => {
       const success = initMixpanel(); // Initialize Mixpanel
       if (success) {
-        // Identify user from server-side prop (same cookie as GrowthBook uses)
+        // Identify user from API route (same cookie as GrowthBook uses)
         // IMPORTANT: Identify before tracking to ensure events are associated with the user
         if (userId) {
           await identifyUser(userId);

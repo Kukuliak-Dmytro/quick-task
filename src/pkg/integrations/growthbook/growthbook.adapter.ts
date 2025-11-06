@@ -2,6 +2,7 @@ import { GrowthBook } from "@growthbook/growthbook";
 import { cookies } from "next/headers";
 
 import { envServer } from "@/config/envs";
+import { USER_ID_COOKIE } from "@/proxy";
 
 // growthbook
 const gb = new GrowthBook({
@@ -34,11 +35,14 @@ export const getFeatureValue = async <T>(
 ): Promise<T> => {
   await ensureInitialized();
 
+  // Read user ID from cookies (server-side) for GrowthBook experiment hashing
   const cookieStore = await cookies();
-  const userId = cookieStore?.get("user-id")?.value;
+  const userId = cookieStore.get(USER_ID_COOKIE)?.value || "anonymous";
 
+  // GrowthBook requires at least an empty id attribute for consistent evaluation
+  // Even without targeting rules, the id attribute is needed for proper feature flag evaluation
   gb.setAttributes({
-    ...(userId ? { id: userId } : {}),
+    id: userId,
     ...attributes,
   });
 
