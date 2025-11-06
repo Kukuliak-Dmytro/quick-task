@@ -1,9 +1,11 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { postByIdQueryOptions } from "@/app/entities/api";
 import Link from "next/link";
 import { FullPostSkeleton } from "./full-post-skeleton.component";
+import { trackPostView } from "@/pkg/integrations/mixpanel";
 
 // interface
 interface IFullPostProps {
@@ -22,6 +24,15 @@ interface IFullPostProps {
  */
 export const FullPost = ({ postId }: IFullPostProps) => {
   const { data: post, status, error } = useQuery(postByIdQueryOptions(postId));
+  const hasTrackedView = useRef(false);
+
+  // Track post view when post is successfully loaded
+  useEffect(() => {
+    if (post && status === "success" && !hasTrackedView.current) {
+      trackPostView(post.id, post.title);
+      hasTrackedView.current = true;
+    }
+  }, [post, status]);
 
   // Loading state
   if (status === "pending") {

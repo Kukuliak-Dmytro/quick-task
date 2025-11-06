@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { createPost, POST_QUERY_KEYS } from "@/app/entities/api";
 import { Button } from "@/app/shared/components/ui/button";
+import { trackPostCreation } from "@/pkg/integrations/mixpanel";
 
 /**
  * CreatePostForm component for creating new posts.
@@ -26,7 +27,10 @@ export const CreatePostForm = () => {
   // Create post mutation
   const mutation = useMutation({
     mutationFn: createPost,
-    onSuccess: () => {
+    onSuccess: (post) => {
+      // Track post creation in Mixpanel
+      trackPostCreation(post.id, post.title, post.published);
+
       // Invalidate posts query to refetch the list
       queryClient.invalidateQueries({ queryKey: POST_QUERY_KEYS.posts() });
 
