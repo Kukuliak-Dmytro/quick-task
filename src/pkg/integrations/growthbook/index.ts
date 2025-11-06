@@ -1,2 +1,2 @@
-export * from "./growthbook.adapter";
-export * from "./growthbook.server";
+export { getFeatureValue } from "./growthbook.adapter";
+export { configureServerSideGrowthBook } from "./growthbook.server";

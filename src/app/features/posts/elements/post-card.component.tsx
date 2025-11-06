@@ -3,25 +3,14 @@
 import { IPost } from "@/app/entities/models";
 import { Link } from "@/pkg/libraries/locale";
 
-/**
- * Props interface for the PostCard component.
- *
- * @interface IPostCardProps
- */
+//interface
 interface IPostCardProps {
-  /** The post object to display */
   post: IPost;
 }
 
+//component
 /**
  * PostCard component for displaying a single post preview.
- *
- * This component renders a post card with a truncated preview of the content.
- * The component includes post metadata such as author, date, and publication status.
- *
- * @param props - The component props
- * @param props.post - The post object containing all post data and metadata
- * @returns JSX element representing the post card
  */
 export const PostCard = ({ post }: IPostCardProps) => {
   // Format date to readable string
@@ -36,6 +25,7 @@ export const PostCard = ({ post }: IPostCardProps) => {
       ? `${post.content.substring(0, 150)}...`
       : post.content;
 
+  //return
   return (
     <article
       className="border border-border rounded-lg p-6 bg-card hover:shadow-lg

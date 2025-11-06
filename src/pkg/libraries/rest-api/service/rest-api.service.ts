@@ -7,8 +7,12 @@ import {
 
 let browserQueryClient: QueryClient | undefined = undefined;
 
-// make query client
+//function
+/**
+ * Creates a new QueryClient instance.
+ */
 const makeQueryClient = () => {
+  //return
   return new QueryClient({
     defaultOptions: {
       queries: {
@@ -19,6 +23,7 @@ const makeQueryClient = () => {
       },
       dehydrate: {
         shouldDehydrateQuery: (query) => {
+          //return
           return (
             defaultShouldDehydrateQuery(query) ||
             query.state.status === "pending"
@@ -29,15 +34,20 @@ const makeQueryClient = () => {
   });
 };
 
-// query client
+//function
+/**
+ * Gets or creates a QueryClient instance.
+ */
 export const getQueryClient = () => {
   if (isServer) {
     const serverClient = makeQueryClient();
+    //return
     return serverClient;
   } else {
     if (!browserQueryClient) {
       browserQueryClient = makeQueryClient();
     }
+    //return
     return browserQueryClient;
   }
 };

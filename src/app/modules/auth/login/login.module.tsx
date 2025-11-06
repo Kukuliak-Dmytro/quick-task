@@ -13,14 +13,9 @@ import {
 import { useState } from "react";
 import { signIn } from "../auth.service";
 
+//component
 /**
  * LoginModule component for user authentication.
- *
- * This component provides a form for users to sign in with their email and password.
- * It includes form validation using React Hook Form and Zod, error handling, and loading states.
- * The form automatically redirects users after successful authentication.
- *
- * @returns JSX element representing the login module
  */
 export const LoginModule = () => {
   const t = useTranslations();
@@ -49,6 +44,7 @@ export const LoginModule = () => {
     }
   };
 
+  //return
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       {/* new field component */}

@@ -10,19 +10,16 @@ import {
   getFeatureValue,
 } from "@/pkg/integrations/growthbook";
 
+//interface
 interface IProps {
   params: Promise<{ locale: Locale }>;
 }
 
+//component
 /**
  * Home page component.
- *
- * This page provides a simple landing page with a link to the posts page
- * and displays the GrowthBook feature flag value.
- *
- * @returns JSX element representing the home page
  */
-export default async function Home(props: IProps) {
+export const Home = async (props: IProps) => {
   const { locale } = await props.params;
 
   // Validate locale
@@ -42,9 +39,12 @@ export default async function Home(props: IProps) {
     {},
   );
 
+  //return
   return (
     <PageContainer>
       <HomeModule listViewType={listViewType} />
     </PageContainer>
   );
-}
+};
+
+export default Home;

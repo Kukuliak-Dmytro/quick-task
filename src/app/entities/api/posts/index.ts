@@ -1,14 +1,10 @@
-/**
- * Posts API index file.
- *
- * This file re-exports all posts-related API functions, query options, and mutations
- * for easy importing throughout the application. It includes data fetching, caching,
- * and mutation operations for posts.
- */
-
-// Re-export posts API functions, query options, and mutations
-export * from "./post.api";
-export * from "./post.query";
-export * from "./post.mutation";
-export * from "./post.by-id.api";
-export * from "./post.by-id.query";
+export type { IGetPostsParams } from "./post.api";
+export { getPosts } from "./post.api";
+export { POST_QUERY_KEYS, postsInfiniteQueryOptions } from "./post.query";
+export type { ICreatePostData } from "./post.mutation";
+export { createPost } from "./post.mutation";
+export { getPostById } from "./post.by-id.api";
+export {
+  POST_BY_ID_QUERY_KEYS,
+  postByIdQueryOptions,
+} from "./post.by-id.query";

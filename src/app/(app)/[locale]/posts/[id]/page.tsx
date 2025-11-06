@@ -8,11 +8,16 @@ import { routing } from "@/pkg/libraries/locale/routing";
 
 export const revalidate = 30;
 
+//interface
 interface IProps {
   params: Promise<{ id: string; locale: Locale }>;
 }
 
-export default async function FullPostPage(props: IProps) {
+//component
+/**
+ * FullPostPage component.
+ */
+export const FullPostPage = async (props: IProps) => {
   const { id, locale } = await props.params;
 
   // Validate locale
@@ -23,9 +28,12 @@ export default async function FullPostPage(props: IProps) {
   // Enable static rendering
   setRequestLocale(locale);
 
+  //return
   return (
     <PageContainer>
       <PostModule postId={id} />
     </PageContainer>
   );
-}
+};
+
+export default FullPostPage;

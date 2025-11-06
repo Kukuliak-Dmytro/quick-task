@@ -1,9 +1,9 @@
+//component
 /**
  * PostCardSkeleton component for displaying loading state of post card.
- *
- * @returns JSX element representing post card skeleton loader
  */
 export const PostCardSkeleton = () => {
+  //return
   return (
     <article
       className="border border-border rounded-lg p-6 bg-card animate-pulse">

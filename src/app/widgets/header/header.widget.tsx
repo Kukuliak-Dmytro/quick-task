@@ -8,7 +8,10 @@ import { signOut } from "@/app/modules/auth/auth.service";
 import { Button } from "@/app/shared/components/ui/button";
 import { Link, useRouter } from "@/pkg/libraries/locale";
 
-// component
+//component
+/**
+ * HeaderComponent widget.
+ */
 export const HeaderComponent = () => {
   const t = useTranslations();
   const locale = useLocale();
@@ -32,6 +35,7 @@ export const HeaderComponent = () => {
     }
   };
 
+  //return
   return (
     <header className="border-b">
       <nav

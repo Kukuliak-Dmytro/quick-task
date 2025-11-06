@@ -1,13 +1,16 @@
 import { type Logger, pino } from "pino";
 
-// interface
+//interface
 interface IDebugUtil {
   text: string;
   value: unknown;
   isActiveOnProd?: boolean;
 }
 
-// logger util
+//function
+/**
+ * Logger utility for debugging.
+ */
 export const loggerUtil = (props: IDebugUtil) => {
   const { text, value, isActiveOnProd = false } = props;
 

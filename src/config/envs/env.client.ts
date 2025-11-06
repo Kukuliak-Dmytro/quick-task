@@ -2,7 +2,10 @@ import { z } from "zod";
 
 import { createEnv } from "@t3-oss/env-nextjs";
 
-// env client
+//constant
+/**
+ * Client-side environment variables configuration.
+ */
 export const envClient = createEnv({
   client: {
     // front end url(current app url)

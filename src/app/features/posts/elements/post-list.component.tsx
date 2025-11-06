@@ -9,14 +9,9 @@ import { Button } from "@/app/shared/components/ui/button";
 import { cn } from "@/app/shared/utils/utils";
 import { useCallback } from "react";
 
+//component
 /**
  * PostList component for displaying posts with infinite scroll.
- *
- * This component fetches posts using TanStack Query infinite query and displays them
- * in a grid layout. It handles loading and error states, includes the ability to create new posts,
- * and provides infinite scroll functionality with a "Load More" button.
- *
- * @returns JSX element representing the post list with infinite scroll functionality
  */
 export const PostList = () => {
   const t = useTranslations();
@@ -40,6 +35,7 @@ export const PostList = () => {
 
   // Loading state with skeleton
   if (isLoading) {
+    //return
     return (
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <div className="mb-8 text-center">
@@ -57,6 +53,7 @@ export const PostList = () => {
 
   // Error state
   if (error) {
+    //return
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-center min-h-[400px]">
@@ -74,6 +71,7 @@ export const PostList = () => {
   }
 
   // Success state with posts
+  //return
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="mb-8 text-center">

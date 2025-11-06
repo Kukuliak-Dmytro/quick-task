@@ -2,7 +2,10 @@ import * as Sentry from "@sentry/nextjs";
 
 import { envClient } from "@/config/envs";
 
-// init
+//constant
+/**
+ * Sentry edge runtime configuration.
+ */
 Sentry.init({
   dsn: envClient.NEXT_PUBLIC_SENTRY_DSN,
   tracesSampleRate: 1,

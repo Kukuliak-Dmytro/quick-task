@@ -12,19 +12,26 @@ const gb = new GrowthBook({
 
 let initialized = false;
 
-async function ensureInitialized() {
+//function
+/**
+ * Ensures GrowthBook is initialized.
+ */
+const ensureInitialized = async () => {
   if (!initialized) {
     await gb.init({ timeout: 3000 });
     initialized = true;
   }
-}
+};
 
-// get feature flags
-export async function getFeatureValue<T>(
+//function
+/**
+ * Gets a feature flag value from GrowthBook.
+ */
+export const getFeatureValue = async <T>(
   key: string,
   defaultValue: T,
   attributes: Record<string, unknown>,
-): Promise<T> {
+): Promise<T> => {
   await ensureInitialized();
 
   const cookieStore = await cookies();
@@ -37,5 +44,6 @@ export async function getFeatureValue<T>(
 
   const result = gb.evalFeature<T>(key);
 
+  //return
   return result?.value ?? defaultValue;
-}
+};

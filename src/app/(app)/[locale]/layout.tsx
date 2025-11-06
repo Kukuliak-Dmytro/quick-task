@@ -14,22 +14,30 @@ import { UiProvider } from "@/pkg/libraries/ui";
 import { routing } from "@/pkg/libraries/locale/routing";
 import { IntegrationsProvider } from "@/pkg/integrations/integrations.provider";
 
-// interface
+//interface
 interface IProps {
   children: ReactNode;
   params: Promise<{ locale: Locale }>;
 }
 
-// generateStaticParams
-export function generateStaticParams() {
+//function
+/**
+ * Generates static params for all locales.
+ */
+export const generateStaticParams = () => {
+  //return
   return routing.locales.map((locale) => ({ locale }));
-}
+};
 
-// metadata
+//function
+/**
+ * Generates metadata for the root layout.
+ */
 export const generateMetadata = async (): Promise<Metadata> => {
   const title = "Quick Task";
   const description = "Speedrunned a task in a day";
 
+  //return
   return {
     title: {
       default: title,
@@ -40,8 +48,11 @@ export const generateMetadata = async (): Promise<Metadata> => {
   };
 };
 
-// component
-const RootLayout: FC<Readonly<IProps>> = async (props) => {
+//component
+/**
+ * RootLayout component.
+ */
+export const RootLayout: FC<Readonly<IProps>> = async (props) => {
   const { children, params } = props;
 
   const { locale } = await params;
@@ -53,7 +64,7 @@ const RootLayout: FC<Readonly<IProps>> = async (props) => {
   // Enable static rendering
   setRequestLocale(locale);
 
-  // return
+  //return
   return (
     <html lang={locale} suppressHydrationWarning>
       <ScanComponent isDev={envServer.NODE_ENV !== "production"} />

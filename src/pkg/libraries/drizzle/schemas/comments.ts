@@ -2,6 +2,7 @@ import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { posts } from "./posts";
 import { user } from "./auth";
 
+//constant
 /**
  * Comments table schema definition.
  */

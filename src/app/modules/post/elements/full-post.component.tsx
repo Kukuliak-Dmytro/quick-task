@@ -7,20 +7,14 @@ import Link from "next/link";
 import { FullPostSkeleton } from "./full-post-skeleton.component";
 import { trackPostView } from "@/pkg/integrations/mixpanel";
 
-// interface
+//interface
 interface IFullPostProps {
   postId: string;
 }
 
+//component
 /**
  * FullPost component for displaying a single post with full content.
- *
- * This component fetches a post by ID, handles loading and error states,
- * and displays the full post content. Similar to how CommentList handles
- * fetching and rendering comments.
- *
- * @param props - Component props containing the post ID
- * @returns JSX element representing the full post
  */
 export const FullPost = ({ postId }: IFullPostProps) => {
   const { data: post, status, error } = useQuery(postByIdQueryOptions(postId));
@@ -36,11 +30,13 @@ export const FullPost = ({ postId }: IFullPostProps) => {
 
   // Loading state
   if (status === "pending") {
+    //return
     return <FullPostSkeleton />;
   }
 
   // Error state
   if (status === "error") {
+    //return
     return (
       <div className="text-red-500">
         {error instanceof Error ? error.message : "Error loading post"}
@@ -55,6 +51,7 @@ export const FullPost = ({ postId }: IFullPostProps) => {
     day: "numeric",
   });
 
+  //return
   return (
     <article className="border border-border rounded-lg p-6 bg-card">
       <div className="flex items-center justify-between mb-4">

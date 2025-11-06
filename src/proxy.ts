@@ -5,23 +5,36 @@ import createMiddleware from "next-intl/middleware";
 import { hasLocale } from "next-intl";
 import { routing } from "./pkg/libraries/locale";
 
+//constant
+/**
+ * Internationalization middleware.
+ */
 export const intlMiddleware = createMiddleware(routing);
 
+//constant
+/**
+ * User ID cookie name.
+ */
 export const USER_ID_COOKIE = "user-id";
 const NEXT_LOCALE_COOKIE = "NEXT_LOCALE";
 
+//function
 /**
  * Extracts the locale from the NEXT_LOCALE cookie, or falls back to default locale.
  */
-function getLocaleFromRequest(request: NextRequest): string {
+const getLocaleFromRequest = (request: NextRequest): string => {
   const cookieLocale = request.cookies.get(NEXT_LOCALE_COOKIE)?.value;
   if (cookieLocale && hasLocale(routing.locales, cookieLocale)) {
     return cookieLocale;
   }
   return routing.defaultLocale;
-}
+};
 
-export async function proxy(request: NextRequest) {
+//function
+/**
+ * Proxy middleware for authentication and internationalization.
+ */
+export const proxy = async (request: NextRequest) => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -51,9 +64,14 @@ export async function proxy(request: NextRequest) {
     });
   }
 
+  //return
   return response;
-}
+};
 
+//constant
+/**
+ * Middleware configuration.
+ */
 export const config = {
   matcher: ["/((?!api|_next|_vercel|.*\\..*|.*/login|.*/register).*)"],
 };

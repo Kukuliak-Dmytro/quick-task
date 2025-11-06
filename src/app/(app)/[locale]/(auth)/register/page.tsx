@@ -9,20 +9,16 @@ import { routing } from "@/pkg/libraries/locale/routing";
 
 export const revalidate = 30;
 
+//interface
 interface IProps {
   params: Promise<{ locale: Locale }>;
 }
 
+//component
 /**
- * Register page component.
- *
- * This page provides the user interface for user registration, including
- * the registration module and page title. It's designed to be simple and focused
- * on the account creation process.
- *
- * @returns JSX element representing the register page
+ * RegisterPage component.
  */
-const RegisterPage = (props: IProps) => {
+export const RegisterPage = (props: IProps) => {
   const { locale } = use(props.params);
 
   // Validate locale
@@ -32,6 +28,8 @@ const RegisterPage = (props: IProps) => {
 
   // Enable static rendering
   setRequestLocale(locale);
+
+  //return
   return (
     <PageContainer>
       <div className="mx-auto max-w-md space-y-6">

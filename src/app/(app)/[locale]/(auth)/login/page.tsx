@@ -9,20 +9,16 @@ import { routing } from "@/pkg/libraries/locale/routing";
 
 export const revalidate = 30;
 
+//interface
 interface IProps {
   params: Promise<{ locale: Locale }>;
 }
 
+//component
 /**
- * Login page component.
- *
- * This page provides the user interface for user authentication, including
- * the login module and page title. It's designed to be simple and focused
- * on the authentication process.
- *
- * @returns JSX element representing the login page
+ * LoginPage component.
  */
-const LoginPage = (props: IProps) => {
+export const LoginPage = (props: IProps) => {
   const { locale } = use(props.params);
 
   // Validate locale
@@ -32,6 +28,8 @@ const LoginPage = (props: IProps) => {
 
   // Enable static rendering
   setRequestLocale(locale);
+
+  //return
   return (
     <PageContainer>
       <div className="mx-auto max-w-md space-y-6">

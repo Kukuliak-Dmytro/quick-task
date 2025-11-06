@@ -8,19 +8,14 @@ import {
 import { FullPost } from "./elements/full-post.component";
 import { CommentsSection } from "@/app/features/comments-section";
 
-// interface
+//interface
 interface IPostModuleProps {
   postId: string;
 }
 
+//component
 /**
  * PostModule component for displaying a single post with comments.
- *
- * This component handles server-side data prefetching for a single post and its comments.
- * It provides a hydration boundary for optimal performance with infinite query support.
- *
- * @param props - Component props containing the post ID
- * @returns Promise that resolves to JSX element representing the post module
  */
 export const PostModule = async ({ postId }: IPostModuleProps) => {
   const t = await getTranslations();
@@ -32,6 +27,7 @@ export const PostModule = async ({ postId }: IPostModuleProps) => {
     queryClient.prefetchInfiniteQuery(commentsInfiniteQueryOptions(postId)),
   ]);
 
+  //return
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div className="container mx-auto px-4 py-8 max-w-3xl">

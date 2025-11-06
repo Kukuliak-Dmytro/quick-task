@@ -3,12 +3,15 @@
 import { FC, useEffect } from "react";
 import { scan } from "react-scan";
 
-// interface
+//interface
 interface IProps {
   isDev: boolean;
 }
 
-// component
+//component
+/**
+ * ScanComponent for React Scan integration.
+ */
 export const ScanComponent: FC<Readonly<IProps>> = (props) => {
   const { isDev } = props;
 
@@ -22,6 +25,6 @@ export const ScanComponent: FC<Readonly<IProps>> = (props) => {
     }
   }, [isDev]);
 
-  // return
+  //return
   return null;
 };

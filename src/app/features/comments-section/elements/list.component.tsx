@@ -6,22 +6,21 @@ import { commentsInfiniteQueryOptions } from "@/app/entities/api";
 import { Comment } from "./comment.component";
 import { CommentSkeleton } from "./skeleton.component";
 
-// interface
+//interface
 interface ICommentListProps {
   postId: string;
 }
 
+//component
 /**
  * CommentList component for displaying a list of comments with infinite scroll.
- *
- * @param props - Component props containing the post ID
- * @returns JSX element representing the comment list
  */
 export const CommentList = ({ postId }: ICommentListProps) => {
   const t = useTranslations();
   const query = useInfiniteQuery(commentsInfiniteQueryOptions(postId));
 
   if (query.status === "pending") {
+    //return
     return (
       <div>
         {[...Array(3)].map((_, i) => (
@@ -32,11 +31,13 @@ export const CommentList = ({ postId }: ICommentListProps) => {
   }
 
   if (query.status === "error") {
+    //return
     return <div className="text-red-500">{t("comment_load_error")}</div>;
   }
 
   const items = query.data.pages.flatMap((p) => p.comments);
 
+  //return
   return (
     <div>
       {items.map((comment) => (

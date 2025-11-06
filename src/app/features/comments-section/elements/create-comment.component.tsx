@@ -7,16 +7,14 @@ import { createComment, COMMENT_QUERY_KEYS } from "@/app/entities/api";
 import { Button } from "@/app/shared/components/ui/button";
 import { Input } from "@/app/shared/components/ui/input";
 
-// interface
+//interface
 interface ICreateCommentProps {
   postId: string;
 }
 
+//component
 /**
  * CreateComment component for creating new comments.
- *
- * @param props - Component props containing the post ID
- * @returns JSX element representing the create comment form
  */
 export const CreateComment = ({ postId }: ICreateCommentProps) => {
   const t = useTranslations();
@@ -45,6 +43,7 @@ export const CreateComment = ({ postId }: ICreateCommentProps) => {
     e.preventDefault();
 
     if (!content.trim()) {
+      //return
       return;
     }
 
@@ -55,6 +54,7 @@ export const CreateComment = ({ postId }: ICreateCommentProps) => {
     });
   };
 
+  //return
   return (
     <form onSubmit={handleSubmit} className="mb-6 space-y-4">
       <div>

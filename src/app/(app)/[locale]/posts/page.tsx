@@ -10,11 +10,16 @@ import { routing } from "@/pkg/libraries/locale/routing";
 
 export const revalidate = 30;
 
+//interface
 interface IProps {
   params: Promise<{ locale: Locale }>;
 }
 
-export default async function PostsPage(props: IProps) {
+//component
+/**
+ * PostsPage component.
+ */
+export const PostsPage = async (props: IProps) => {
   const { locale } = await props.params;
 
   // Validate locale
@@ -27,9 +32,13 @@ export default async function PostsPage(props: IProps) {
   const queryClient = getQueryClient();
 
   await queryClient.prefetchInfiniteQuery(postsInfiniteQueryOptions());
+
+  //return
   return (
     <PageContainer>
       <PostsModule />
     </PageContainer>
   );
-}
+};
+
+export default PostsPage;

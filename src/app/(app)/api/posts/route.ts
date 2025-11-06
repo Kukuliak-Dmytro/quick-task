@@ -3,24 +3,16 @@ import { db, posts, user } from "@/pkg/libraries/drizzle";
 import { desc, eq, count } from "drizzle-orm";
 import { requireSession } from "../lib";
 
+//function
 /**
- * GET /api/posts
- * Fetches posts from the database with pagination support.
- *
- * This endpoint retrieves posts with pagination support, including author information
- * via database joins. Requires authentication and supports query parameters for
- * page and limit customization.
- *
- * @param request - The incoming request with search params for pagination
- * @returns JSON response with posts array, pagination metadata, and total count
- * @throws {401} Unauthorized if no valid session
- * @throws {500} Internal server error if database operation fails
+ * GET /api/posts - Fetches posts from the database with pagination support.
  */
-export async function GET(request: Request) {
+export const GET = async (request: Request) => {
   try {
     // Verify authentication
     const authResult = await requireSession(request);
     if (authResult instanceof NextResponse) {
+      //return
       return authResult;
     }
 
@@ -62,6 +54,7 @@ export async function GET(request: Request) {
     const hasNextPage = page < totalPages;
     const hasPreviousPage = page > 1;
 
+    //return
     return NextResponse.json({
       posts: paginatedPosts,
       total: totalCount,
@@ -75,32 +68,24 @@ export async function GET(request: Request) {
     });
   } catch (error) {
     console.error("Error fetching posts:", error);
+    //return
     return NextResponse.json(
       { error: "Failed to fetch posts" },
       { status: 500 },
     );
   }
-}
+};
 
+//function
 /**
- * POST /api/posts
- * Creates a new post.
- *
- * This endpoint creates a new post with the provided title, content, and publication
- * status. Requires authentication and validates required fields before creation.
- * Returns the created post with author information.
- *
- * @param request - The incoming request with post data in JSON body
- * @returns JSON response with the created post including author information
- * @throws {401} Unauthorized if no valid session
- * @throws {400} Bad request if required fields are missing
- * @throws {500} Internal server error if database operation fails
+ * POST /api/posts - Creates a new post.
  */
-export async function POST(request: Request) {
+export const POST = async (request: Request) => {
   try {
     // Verify authentication
     const authResult = await requireSession(request);
     if (authResult instanceof NextResponse) {
+      //return
       return authResult;
     }
     const { session } = authResult;
@@ -111,6 +96,7 @@ export async function POST(request: Request) {
 
     // Validate required fields
     if (!title || !content) {
+      //return
       return NextResponse.json(
         { error: "Title and content are required" },
         { status: 400 },
@@ -153,12 +139,14 @@ export async function POST(request: Request) {
       .where(eq(posts.id, newPost.id))
       .limit(1);
 
+    //return
     return NextResponse.json(postWithAuthor[0], { status: 201 });
   } catch (error) {
     console.error("Error creating post:", error);
+    //return
     return NextResponse.json(
       { error: "Failed to create post" },
       { status: 500 },
     );
   }
-}
+};

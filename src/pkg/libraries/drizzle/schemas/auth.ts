@@ -1,12 +1,8 @@
 import { pgTable, text, timestamp, boolean } from "drizzle-orm/pg-core";
 
+//constant
 /**
  * User table schema definition for Better Auth.
- *
- * This table stores user account information including authentication details,
- * profile information, and email verification status.
- *
- * @constant user
  */
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -20,13 +16,9 @@ export const user = pgTable("user", {
     .notNull(),
 });
 
+//constant
 /**
  * Session table schema definition for Better Auth.
- *
- * This table stores user session information including tokens, expiration times,
- * and device information for session management.
- *
- * @constant session
  */
 export const session = pgTable("session", {
   id: text("id").primaryKey(),
@@ -43,13 +35,9 @@ export const session = pgTable("session", {
     .references(() => user.id, { onDelete: "cascade" }),
 });
 
+//constant
 /**
  * Account table schema definition for Better Auth.
- *
- * This table stores OAuth provider account information and authentication tokens
- * for external authentication providers.
- *
- * @constant account
  */
 export const account = pgTable("account", {
   id: text("id").primaryKey(),
@@ -71,13 +59,9 @@ export const account = pgTable("account", {
     .notNull(),
 });
 
+//constant
 /**
  * Verification table schema definition for Better Auth.
- *
- * This table stores email verification and password reset tokens
- * with expiration times for security purposes.
- *
- * @constant verification
  */
 export const verification = pgTable("verification", {
   id: text("id").primaryKey(),

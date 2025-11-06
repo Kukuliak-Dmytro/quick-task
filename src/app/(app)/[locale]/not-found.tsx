@@ -1,14 +1,11 @@
 import { PageContainer } from "@/app/shared/components/page-container";
 
+//component
 /**
- * Not Found page component.
- *
- * This page is displayed when a route is not found (404 error).
- * It provides a user-friendly error message and a way to navigate back to the home page.
- *
- * @returns JSX element representing the not found page
+ * NotFound component.
  */
-export default function NotFound() {
+export const NotFound = () => {
+  //return
   return (
     <PageContainer
       className="flex min-h-[60vh] flex-col items-center justify-center gap-2
@@ -17,4 +14,6 @@ export default function NotFound() {
       <div className="text-2xl font-semibold text-foreground">Not Found</div>
     </PageContainer>
   );
-}
+};
+
+export default NotFound;

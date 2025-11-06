@@ -1,8 +1,9 @@
 import ky, { type KyInstance } from "ky";
 
-// fetcher
-// this fetcher is used to fetch data from the next.js api routes
-// cookies are attached automatically
+//constant
+/**
+ * Fetcher for Next.js API routes.
+ */
 export const webFetcher: KyInstance = ky.create({
   prefixUrl: "/api",
 

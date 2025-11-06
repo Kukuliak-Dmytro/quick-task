@@ -3,14 +3,19 @@ import { db, posts, user } from "@/pkg/libraries/drizzle";
 import { eq } from "drizzle-orm";
 import { requireSession } from "../../lib";
 
-export async function GET(
+//function
+/**
+ * GET /api/posts/[id] - Fetches a single post by ID.
+ */
+export const GET = async (
   request: Request,
   ctx: { params: Promise<{ id: string }> },
-) {
+) => {
   try {
     // Verify authentication
     const authResult = await requireSession(request);
     if (authResult instanceof NextResponse) {
+      //return
       return authResult;
     }
 
@@ -36,15 +41,18 @@ export async function GET(
       .limit(1);
 
     if (!postWithAuthor.length) {
+      //return
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
 
+    //return
     return NextResponse.json(postWithAuthor[0]);
   } catch (error) {
     console.error("Error fetching post:", error);
+    //return
     return NextResponse.json(
       { error: "Failed to fetch post" },
       { status: 500 },
     );
   }
-}
+};

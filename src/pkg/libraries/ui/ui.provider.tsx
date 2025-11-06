@@ -1,12 +1,15 @@
 import type { FC } from "react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
-// interface
+//interface
 interface IProps {
   children: React.ReactNode;
 }
 
-// component
+//component
+/**
+ * UiProvider component.
+ */
 export const UiProvider: FC<Readonly<IProps>> = (props) => {
   const { children } = props;
 

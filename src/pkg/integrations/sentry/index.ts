@@ -1,2 +1,1 @@
-export * from "./sentry.server.config";
-export * from "./sentry.edge.config";
+// Sentry config files are side-effect imports (no exports)

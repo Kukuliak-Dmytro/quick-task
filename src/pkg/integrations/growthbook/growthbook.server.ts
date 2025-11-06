@@ -1,7 +1,10 @@
 import { configureCache, setPolyfills } from "@growthbook/growthbook";
 
-// config
-export function configureServerSideGrowthBook() {
+//function
+/**
+ * Configures GrowthBook for server-side feature flag evaluation.
+ */
+export const configureServerSideGrowthBook = () => {
   setPolyfills({
     fetch: (url: string, init: RequestInit) =>
       fetch(url, {
@@ -16,4 +19,4 @@ export function configureServerSideGrowthBook() {
   configureCache({
     disableCache: true,
   });
-}
+};

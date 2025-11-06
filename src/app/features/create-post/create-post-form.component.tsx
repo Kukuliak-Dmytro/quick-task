@@ -7,15 +7,9 @@ import { createPost, POST_QUERY_KEYS } from "@/app/entities/api";
 import { Button } from "@/app/shared/components/ui/button";
 import { trackPostCreation } from "@/pkg/integrations/mixpanel";
 
+//component
 /**
  * CreatePostForm component for creating new posts.
- *
- * This component provides a form for authenticated users to create
- * new posts with title and content. All posts are published immediately.
- * The form includes validation and automatically refreshes the post list
- * after successful creation.
- *
- * @returns JSX element representing the create post form
  */
 export const CreatePostForm = () => {
   const t = useTranslations();
@@ -45,6 +39,7 @@ export const CreatePostForm = () => {
     e.preventDefault();
 
     if (!title.trim() || !content.trim()) {
+      //return
       return;
     }
 
@@ -56,6 +51,7 @@ export const CreatePostForm = () => {
   };
 
   if (!isOpen) {
+    //return
     return (
       <div className="mb flex justify-center">
         <Button onClick={() => setIsOpen(true)} size="lg">
@@ -65,6 +61,7 @@ export const CreatePostForm = () => {
     );
   }
 
+  //return
   return (
     <div className="mb-8 border rounded-lg p-6 bg-card max-w-4xl mx-auto">
       <div className="flex items-center justify-between mb-4">

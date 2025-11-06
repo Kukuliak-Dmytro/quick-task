@@ -1,2 +1,9 @@
 export { db } from "./database";
-export * from "./schemas";
+export {
+  user,
+  session,
+  account,
+  verification,
+  posts,
+  comments,
+} from "./schemas";

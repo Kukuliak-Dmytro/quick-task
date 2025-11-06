@@ -13,4 +13,8 @@ Sentry.init({
   debug: false,
 });
 
+//constant
+/**
+ * Router transition start handler for Sentry.
+ */
 export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;

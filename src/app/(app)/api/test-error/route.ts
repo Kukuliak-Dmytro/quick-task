@@ -1,14 +1,10 @@
 import * as Sentry from "@sentry/nextjs";
 
+//function
 /**
- * Test error endpoint for Sentry integration.
- *
- * This endpoint intentionally throws an error to test Sentry error tracking.
- * It should only be used in development/staging environments.
- *
- * @returns Error response
+ * GET /api/test-error - Test error endpoint for Sentry integration.
  */
-export async function GET() {
+export const GET = async () => {
   try {
     // Capture a test exception
     const testError = new Error(
@@ -32,12 +28,13 @@ export async function GET() {
     // Re-throw to ensure error response
     throw error;
   }
-}
+};
 
+//function
 /**
- * POST handler for testing Sentry with custom error messages.
+ * POST /api/test-error - Test error endpoint for Sentry integration with custom error messages.
  */
-export async function POST(request: Request) {
+export const POST = async (request: Request) => {
   try {
     const body = await request.json().catch(() => ({}));
     const { message, type } = body;
@@ -63,4 +60,4 @@ export async function POST(request: Request) {
   } catch (error) {
     throw error;
   }
-}
+};

@@ -3,15 +3,16 @@ import { and, desc, eq, sql } from "drizzle-orm";
 import { requireSession } from "../lib";
 import { db, comments, posts, user } from "@/pkg/libraries/drizzle";
 
+//function
 /**
- * GET /api/comments
- * List comments for a post with pagination
+ * GET /api/comments - List comments for a post with pagination.
  */
-export async function GET(request: Request) {
+export const GET = async (request: Request) => {
   try {
     // Verify authentication
     const authResult = await requireSession(request);
     if (authResult instanceof NextResponse) {
+      //return
       return authResult;
     }
 
@@ -21,6 +22,7 @@ export async function GET(request: Request) {
     const limit = Number(searchParams.get("limit") ?? 10);
 
     if (!postId) {
+      //return
       return NextResponse.json(
         { error: "postId is required" },
         { status: 400 },
@@ -59,6 +61,7 @@ export async function GET(request: Request) {
 
     const totalPages = Math.max(1, Math.ceil(count / limit));
 
+    //return
     return NextResponse.json({
       comments: rows,
       total: count,
@@ -72,22 +75,24 @@ export async function GET(request: Request) {
     });
   } catch (error) {
     console.error("Error listing comments:", error);
+    //return
     return NextResponse.json(
       { error: "Failed to list comments" },
       { status: 500 },
     );
   }
-}
+};
 
+//function
 /**
- * POST /api/comments
- * Create a new comment for a post
+ * POST /api/comments - Create a new comment for a post.
  */
-export async function POST(request: Request) {
+export const POST = async (request: Request) => {
   try {
     // Verify authentication
     const authResult = await requireSession(request);
     if (authResult instanceof NextResponse) {
+      //return
       return authResult;
     }
     const { session } = authResult;
@@ -96,6 +101,7 @@ export async function POST(request: Request) {
     const { postId, content } = body ?? {};
 
     if (!postId || !content) {
+      //return
       return NextResponse.json(
         { error: "postId and content are required" },
         { status: 400 },
@@ -109,6 +115,7 @@ export async function POST(request: Request) {
       .where(eq(posts.id, postId))
       .limit(1);
     if (!existingPost.length) {
+      //return
       return NextResponse.json({ error: "Post not found" }, { status: 404 });
     }
 
@@ -144,12 +151,14 @@ export async function POST(request: Request) {
       .leftJoin(user, eq(comments.authorId, user.id))
       .where(and(eq(comments.id, created.id)));
 
+    //return
     return NextResponse.json(withAuthor, { status: 201 });
   } catch (error) {
     console.error("Error creating comment:", error);
+    //return
     return NextResponse.json(
       { error: "Failed to create comment" },
       { status: 500 },
     );
   }
-}
+};

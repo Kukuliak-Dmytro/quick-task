@@ -1,23 +1,20 @@
 import { type InferSelectModel } from "drizzle-orm";
 import { posts } from "@/pkg/libraries/drizzle";
 import type { IUser } from "./user.model";
-/**
- * Base post type inferred from the database schema.
- */
-type BasePost = InferSelectModel<typeof posts>;
 
+//interface
 /**
- * Post type with author information.
- *
- * This extends the base post type with author details
- * fetched via join from the user table.
+ * Post interface with author information.
  */
-export interface IPost extends BasePost {
+type IBasePost = InferSelectModel<typeof posts>;
+
+export interface IPost extends IBasePost {
   author: IUser | null;
 }
 
+//interface
 /**
- * Pagination metadata interface
+ * Pagination metadata interface.
  */
 export interface IPaginationInfo {
   page: number;
@@ -27,8 +24,9 @@ export interface IPaginationInfo {
   hasPreviousPage: boolean;
 }
 
+//interface
 /**
- * Response interface for paginated posts
+ * Response interface for paginated posts.
  */
 export interface IPostsResponse {
   posts: IPost[];

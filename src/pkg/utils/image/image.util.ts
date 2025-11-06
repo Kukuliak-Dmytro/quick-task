@@ -1,4 +1,7 @@
-// image util
+//function
+/**
+ * Generates a placeholder image shimmer effect.
+ */
 export const imageUtil = (w: number, h: number): string => {
   const shimmer = (w: number, h: number) => `
     <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -20,5 +23,6 @@ export const imageUtil = (w: number, h: number): string => {
       ? Buffer.from(str).toString("base64")
       : window.btoa(str);
 
+  //return
   return `data:image/svg+xml;base64,${toBase64(shimmer(w, h))}`;
 };

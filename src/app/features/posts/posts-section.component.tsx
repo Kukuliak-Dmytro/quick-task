@@ -3,22 +3,16 @@ import { getQueryClient } from "@/pkg/libraries/rest-api/service/rest-api.servic
 import { postsInfiniteQueryOptions } from "@/app/entities/api";
 import { PostList } from "./elements/post-list.component";
 
+//component
 /**
  * PostsSection feature component.
- *
- * Server component: prefetch posts and hydrate on client.
- * This feature brings together all post-related elements:
- * - Post list with infinite scroll
- * - Post cards
- * - Create post functionality
- *
- * @returns Promise that resolves to JSX element representing the posts section
  */
 export const PostsSection = async () => {
   const queryClient = getQueryClient();
 
   await queryClient.prefetchInfiniteQuery(postsInfiniteQueryOptions());
 
+  //return
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <PostList />

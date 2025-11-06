@@ -13,18 +13,11 @@ interface IMixpanelInitializerProps {
   userId: string | null;
 }
 
+//component
 /**
- * Mixpanel initializer component for client-side analytics setup.
- *
- * This component initializes Mixpanel analytics on the client side,
- * identifies the user from the user-id cookie (same as GrowthBook),
- * and tracks the initial page view. It runs once when the component mounts
- * and doesn't render any UI.
- *
- * @param props - Component props containing the user ID
- * @returns This component renders nothing
+ * MixpanelInitializer component for client-side analytics setup.
  */
-export function MixpanelInitializer({ userId }: IMixpanelInitializerProps) {
+export const MixpanelInitializer = ({ userId }: IMixpanelInitializerProps) => {
   useEffect(() => {
     const initializeMixpanel = async () => {
       const success = initMixpanel(); // Initialize Mixpanel
@@ -56,5 +49,6 @@ export function MixpanelInitializer({ userId }: IMixpanelInitializerProps) {
     };
   }, [userId]);
 
-  return null; // This component doesn't render anything
-}
+  //return
+  return null;
+};

@@ -7,31 +7,27 @@ import type { Metric } from "web-vitals";
 // Track initialization state for event functions
 let isInitialized = false;
 
+//function
 /**
- * Sets the initialization state. Called from mixpanel.client.ts after initialization.
+ * Sets the initialization state.
  */
 export const setMixpanelInitialized = (initialized: boolean) => {
   isInitialized = initialized;
 };
 
+//function
 /**
  * Checks if Mixpanel is initialized and ready for tracking.
  */
 const isMixpanelReady = () => isInitialized;
 
+//function
 /**
  * Tracks a post view event in Mixpanel analytics.
- *
- * This function sends a "Post View" event to Mixpanel with post details
- * including ID, title, timestamp, and current URL. Errors are automatically
- * reported to Sentry.
- *
- * @param postId - The unique identifier of the post
- * @param postTitle - The title of the post
- * @returns A promise that resolves when tracking is complete
  */
 export const trackPostView = async (postId: string, postTitle: string) => {
   if (!isMixpanelReady()) {
+    //return
     return;
   }
 
@@ -49,17 +45,9 @@ export const trackPostView = async (postId: string, postTitle: string) => {
   }
 };
 
+//function
 /**
  * Tracks a post creation event in Mixpanel analytics.
- *
- * This function sends a "Post Created" event to Mixpanel with post details
- * including ID, title, published status, timestamp, and current URL. Errors are
- * automatically reported to Sentry.
- *
- * @param postId - The unique identifier of the post
- * @param postTitle - The title of the post
- * @param published - Whether the post is published
- * @returns A promise that resolves when tracking is complete
  */
 export const trackPostCreation = async (
   postId: string,
@@ -67,6 +55,7 @@ export const trackPostCreation = async (
   published: boolean,
 ) => {
   if (!isMixpanelReady()) {
+    //return
     return;
   }
 
@@ -85,17 +74,9 @@ export const trackPostCreation = async (
   }
 };
 
+//function
 /**
  * Tracks a page view event in Mixpanel analytics.
- *
- * This function sends a "Page View" event to Mixpanel with page details
- * including page name, path, locale, timestamp, current URL, and referrer.
- * Errors are automatically reported to Sentry.
- *
- * @param page - The name or identifier of the page
- * @param path - The URL path of the page
- * @param locale - Optional locale information
- * @returns A promise that resolves when tracking is complete
  */
 export const trackPageView = async (
   page: string,
@@ -103,6 +84,7 @@ export const trackPageView = async (
   locale?: string,
 ) => {
   if (!isMixpanelReady()) {
+    //return
     return;
   }
 
@@ -122,17 +104,9 @@ export const trackPageView = async (
   }
 };
 
+//function
 /**
  * Tracks an experiment view event in Mixpanel analytics.
- *
- * This function sends an "Experiment Viewed" event to Mixpanel with experiment
- * details including experiment ID, variation ID, current path, timestamp, and
- * any additional custom properties. Errors are automatically reported to Sentry.
- *
- * @param experimentId - The unique identifier of the experiment
- * @param variationId - The identifier of the variation being viewed
- * @param extra - Optional additional properties to track
- * @returns A promise that resolves when tracking is complete
  */
 export const trackExperimentView = async (
   experimentId: string,
@@ -140,6 +114,7 @@ export const trackExperimentView = async (
   extra?: Record<string, unknown>,
 ) => {
   if (!isMixpanelReady()) {
+    //return
     return;
   }
 
@@ -159,18 +134,13 @@ export const trackExperimentView = async (
   }
 };
 
+//function
 /**
  * Tracks web vitals metrics in Mixpanel analytics.
- *
- * This function sends a "Web Vitals" event to Mixpanel with performance metrics
- * including Core Web Vitals and other performance measurements. Errors are
- * automatically reported to Sentry.
- *
- * @param metrics - Object containing web vitals metrics
- * @returns A promise that resolves when tracking is complete
  */
 export const trackWebVitals = async (metrics: Record<string, Metric>) => {
   if (!isMixpanelReady()) {
+    //return
     return;
   }
 

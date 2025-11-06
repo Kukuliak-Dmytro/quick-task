@@ -1,9 +1,9 @@
+//component
 /**
  * FullPostSkeleton component for displaying loading state of full post.
- *
- * @returns JSX element representing full post skeleton loader
  */
 export const FullPostSkeleton = () => {
+  //return
   return (
     <div className="border border-border rounded-lg p-6 bg-card animate-pulse">
       <div className="flex items-center justify-between mb-4">

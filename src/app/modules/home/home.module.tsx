@@ -7,20 +7,16 @@ import { cn } from "@/app/shared/utils/utils";
 import { Button } from "@/app/shared/components/ui/button";
 import * as Sentry from "@sentry/nextjs";
 
-// interface
+//interface
 interface IProps {
   listViewType: string;
 }
 
+//component
 /**
  * HomeModule component.
- *
- * This module provides a simple landing page with a link to the posts page,
- * buttons to test Sentry error tracking, and displays the GrowthBook feature flag.
- *
- * @returns JSX element representing the home module
  */
-const HomeModule = (props: IProps) => {
+export const HomeModule = (props: IProps) => {
   const { listViewType } = props;
   const t = useTranslations();
   const locale = useLocale();
@@ -65,6 +61,7 @@ const HomeModule = (props: IProps) => {
     }
   };
 
+  //return
   return (
     <div className="flex min-h-screen items-center justify-center">
       <div className="text-center">
@@ -109,5 +106,3 @@ const HomeModule = (props: IProps) => {
     </div>
   );
 };
-
-export default HomeModule;

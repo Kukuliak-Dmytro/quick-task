@@ -4,7 +4,10 @@ import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/pkg/libraries/locale";
 import { Button } from "@/app/shared/components/ui/button";
 
-// component
+//component
+/**
+ * LocaleSwitcher component.
+ */
 export const LocaleSwitcher = () => {
   const locale = useLocale();
   const pathname = usePathname();
@@ -14,6 +17,7 @@ export const LocaleSwitcher = () => {
     router.push(pathname, { locale: nextLocale });
   };
 
+  //return
   return (
     <>
       {locale === "en" && (
