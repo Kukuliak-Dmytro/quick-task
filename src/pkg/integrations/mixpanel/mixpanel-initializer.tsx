@@ -1,21 +1,15 @@
 "use client";
 
 import { useEffect } from "react";
+import { trackPageView } from "./mixpanel.events";
 import {
   initMixpanel,
-  trackPageView,
   identifyUser,
   flushMixpanel,
 } from "@/pkg/integrations/mixpanel/mixpanel.client";
 
-/**
- * Props for the MixpanelInitializer component.
- */
+//interface
 interface IMixpanelInitializerProps {
-  /**
-   * The user ID from the server-side cookie (same as GrowthBook uses).
-   * Passed from the server component to avoid an API call.
-   */
   userId: string | null;
 }
 
@@ -45,9 +39,6 @@ export function MixpanelInitializer({ userId }: IMixpanelInitializerProps) {
 
         // Track app initialization
         await trackPageView("App Initialized", window.location.pathname);
-
-        // Flush events to ensure they're sent immediately
-        await flushMixpanel();
       }
     };
 

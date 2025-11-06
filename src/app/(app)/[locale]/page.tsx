@@ -36,19 +36,11 @@ export default async function Home(props: IProps) {
   // Configure GrowthBook
   configureServerSideGrowthBook();
 
-  // Get feature flag value (same as my-heroui-app)
   const listViewType = await getFeatureValue<string>(
     "flag_recipe_list_view_optimization_v2",
     "pagination",
     {},
   );
-
-  // Debug: Log the feature flag value
-  console.log("[GrowthBook] Feature flag value:", {
-    key: "flag_recipe_list_view_optimization_v2",
-    value: listViewType,
-    defaultValue: "pagination",
-  });
 
   return (
     <PageContainer>
