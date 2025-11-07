@@ -5,8 +5,14 @@ import { notFound } from "next/navigation";
 import { PostsModule } from "@/app/modules/posts";
 import { PageContainer } from "@/app/shared/components/page-container";
 import { getQueryClient } from "@/pkg/libraries/rest-api/service";
-import { postsInfiniteQueryOptions } from "@/app/entities/api";
+import {
+  postsInfiniteQueryOptions,
+  postsQueryOptions,
+} from "@/app/entities/api";
 import { routing } from "@/pkg/libraries/locale/routing";
+import { getFeatureValue } from "@/pkg/integrations/growthbook";
+import { configureServerSideGrowthBook } from "@/pkg/integrations/growthbook";
+import { PAGINATION_LIMIT } from "@/app/features/pagination/pagination.constants";
 
 export const revalidate = 30;
 
@@ -31,12 +37,31 @@ export const PostsPage = async (props: IProps) => {
   setRequestLocale(locale);
   const queryClient = getQueryClient();
 
-  await queryClient.prefetchInfiniteQuery(postsInfiniteQueryOptions());
+  // Configure GrowthBook for server-side evaluation
+  configureServerSideGrowthBook();
+
+  // Evaluate feature flag using the correct flag key from GrowthBook dashboard
+  const listViewType = await getFeatureValue<string>(
+    "flag_recipe_list_view_optimization_v2",
+    "pagination",
+    {},
+  );
+
+  // Prefetch based on variant
+  if (listViewType === "infinite") {
+    // Prefetch first page for infinite scroll
+    await queryClient.prefetchInfiniteQuery(postsInfiniteQueryOptions());
+  } else if (listViewType === "pagination") {
+    // Prefetch first page for paginated variant
+    await queryClient.prefetchQuery(
+      postsQueryOptions({ page: 1, limit: PAGINATION_LIMIT }),
+    );
+  }
 
   //return
   return (
     <PageContainer>
-      <PostsModule />
+      <PostsModule listViewType={listViewType} />
     </PageContainer>
   );
 };

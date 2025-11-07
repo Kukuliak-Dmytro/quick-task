@@ -1,11 +1,21 @@
 "use client";
 
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { createPost, POST_QUERY_KEYS } from "@/app/entities/api";
 import { Button } from "@/app/shared/components/ui/button";
+import { Input } from "@/app/shared/components/ui/input";
+import {
+  Field,
+  FieldError,
+  FieldLabel,
+} from "@/app/shared/components/ui/field";
 import { trackPostCreation } from "@/pkg/integrations/mixpanel";
+import { usePaginationStore } from "@/app/features/pagination";
+import { createPostSchema, ICreatePostSchema } from "./create-post.interface";
 
 //component
 /**
@@ -14,9 +24,18 @@ import { trackPostCreation } from "@/pkg/integrations/mixpanel";
 export const CreatePostForm = () => {
   const t = useTranslations();
   const queryClient = useQueryClient();
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+
+  const resetPagination = usePaginationStore((state) => state.resetPagination);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<ICreatePostSchema>({
+    resolver: zodResolver(createPostSchema),
+  });
 
   // Create post mutation
   const mutation = useMutation({
@@ -25,27 +44,27 @@ export const CreatePostForm = () => {
       // Track post creation in Mixpanel
       trackPostCreation(post.id, post.title, post.published);
 
-      // Invalidate posts query to refetch the list
-      queryClient.invalidateQueries({ queryKey: POST_QUERY_KEYS.posts() });
+      // Invalidate all posts queries to refetch the list
+      queryClient.invalidateQueries({
+        queryKey: POST_QUERY_KEYS.postsBase(),
+      });
+      queryClient.invalidateQueries({
+        queryKey: POST_QUERY_KEYS.postsInfinite(),
+      });
+
+      // Reset pagination
+      resetPagination();
 
       // Reset form
-      setTitle("");
-      setContent("");
+      reset();
       setIsOpen(false);
     },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!title.trim() || !content.trim()) {
-      //return
-      return;
-    }
-
+  const onSubmit = (data: ICreatePostSchema) => {
     mutation.mutate({
-      title: title.trim(),
-      content: content.trim(),
+      title: data.title.trim(),
+      content: data.content.trim(),
       published: true,
     });
   };
@@ -71,48 +90,38 @@ export const CreatePostForm = () => {
         </Button>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Title Input */}
-        <div>
-          <label
-            htmlFor="title"
-            className="block text-sm font-medium mb-2 text-foreground">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <Field>
+          <FieldLabel htmlFor="title">
             {t("create_post_label_title")}
-          </label>
-          <input
+          </FieldLabel>
+          <Input
+            {...register("title")}
             id="title"
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
             placeholder={t("create_post_placeholder_title")}
-            className="w-full px-4 py-2 border border-border rounded-lg
-              focus:outline-none focus:ring-2 focus:ring-primary bg-background
-              text-foreground"
-            required
             disabled={mutation.isPending}
           />
-        </div>
+          <FieldError errors={errors.title ? [errors.title] : []} />
+        </Field>
 
-        {/* Content Textarea */}
-        <div>
-          <label
-            htmlFor="content"
-            className="block text-sm font-medium mb-2 text-foreground">
+        <Field>
+          <FieldLabel htmlFor="content">
             {t("create_post_label_content")}
-          </label>
+          </FieldLabel>
           <textarea
+            {...register("content")}
             id="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
             placeholder={t("create_post_placeholder_content")}
             rows={6}
             className="w-full px-4 py-2 border border-border rounded-lg
               focus:outline-none focus:ring-2 focus:ring-primary resize-vertical
-              bg-background text-foreground"
-            required
+              bg-background text-foreground disabled:opacity-50
+              disabled:cursor-not-allowed"
             disabled={mutation.isPending}
           />
-        </div>
+          <FieldError errors={errors.content ? [errors.content] : []} />
+        </Field>
 
         {/* Error Message */}
         {mutation.isError && (

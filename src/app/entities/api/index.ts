@@ -2,6 +2,7 @@ export type { IGetPostsParams, ICreatePostData } from "./posts";
 export {
   getPosts,
   POST_QUERY_KEYS,
+  postsQueryOptions,
   postsInfiniteQueryOptions,
   createPost,
   getPostById,

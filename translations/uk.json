@@ -53,5 +53,9 @@
   "posts_load_error": "Помилка завантаження постів",
   "posts_empty": "Поки що немає постів. Створіть свій перший пост!",
   "posts_loading_more": "Завантаження більше постів...",
-  "posts_load_more": "Завантажити більше постів"
+  "posts_load_more": "Завантажити більше постів",
+  "pagination_previous": "Попередня",
+  "pagination_next": "Наступна",
+  "pagination_page": "Сторінка",
+  "pagination_of": "з"
 }

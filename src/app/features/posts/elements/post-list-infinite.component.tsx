@@ -7,13 +7,13 @@ import { PostCard } from "./post-card.component";
 import { PostCardSkeleton } from "./post-card-skeleton.component";
 import { Button } from "@/app/shared/components/ui/button";
 import { cn } from "@/app/shared/utils/utils";
-import { useCallback } from "react";
+import { renderList } from "../utils/render-list.utils";
 
 //component
 /**
- * PostList component for displaying posts with infinite scroll.
+ * PostListInfinite component for displaying posts with infinite scroll.
  */
-export const PostList = () => {
+export const PostListInfinite = () => {
   const t = useTranslations();
   const {
     data,
@@ -24,16 +24,14 @@ export const PostList = () => {
     isFetchingNextPage,
   } = useInfiniteQuery(postsInfiniteQueryOptions());
 
-  // Flatten all posts from all pages
   const allPosts = data?.pages.flatMap((page) => page.posts) ?? [];
 
-  const handleLoadMore = useCallback(() => {
+  const handleLoadMore = () => {
     if (hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
-  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+  };
 
-  // Loading state with skeleton
   if (isLoading) {
     //return
     return (
@@ -42,16 +40,15 @@ export const PostList = () => {
           <div className="h-4 w-32 bg-muted rounded mx-auto animate-pulse" />
         </div>
 
-        <div className="space-y-6">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <PostCardSkeleton key={i} />
-          ))}
-        </div>
+        {renderList({
+          items: 3,
+          renderItem: (_, i) => <PostCardSkeleton key={i} />,
+          gap: 24,
+        })}
       </div>
     );
   }
 
-  // Error state
   if (error) {
     //return
     return (
@@ -70,7 +67,6 @@ export const PostList = () => {
     );
   }
 
-  // Success state with posts
   //return
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -90,10 +86,12 @@ export const PostList = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col gap-6">
-          {allPosts.map((post) => (
-            <PostCard key={post.id} post={post} />
-          ))}
+        <>
+          {renderList({
+            items: allPosts,
+            renderItem: (post) => <PostCard key={post.id} post={post} />,
+            gap: 24,
+          })}
 
           {/* Load More Button */}
           {hasNextPage && (
@@ -118,7 +116,7 @@ export const PostList = () => {
               </Button>
             </div>
           )}
-        </div>
+        </>
       )}
     </div>
   );
