@@ -52,10 +52,21 @@
   "posts_total": "Total posts: {count}",
   "posts_load_error": "Error loading posts",
   "posts_empty": "No posts yet. Create your first post!",
+  "posts_empty_search": "No posts found for \"{query}\"",
   "posts_loading_more": "Loading more posts...",
   "posts_load_more": "Load More Posts",
   "pagination_previous": "Previous",
   "pagination_next": "Next",
   "pagination_page": "Page",
-  "pagination_of": "of"
+  "pagination_of": "of",
+  "search": {
+    "placeholder": "Search posts by title...",
+    "button": "Search",
+    "searching": "Searching...",
+    "clear": "Clear",
+    "validation": {
+      "maxLength": "Search query must be 100 characters or less",
+      "invalidCharacters": "Search query contains invalid characters"
+    }
+  }
 }

@@ -48,8 +48,14 @@ export const CreatePostForm = () => {
       queryClient.invalidateQueries({
         queryKey: POST_QUERY_KEYS.postsBase(),
       });
+      // Invalidate all infinite queries (with any search parameter)
       queryClient.invalidateQueries({
-        queryKey: POST_QUERY_KEYS.postsInfinite(),
+        predicate: (query) => {
+          return (
+            Array.isArray(query.queryKey) &&
+            query.queryKey[0] === "posts-infinite"
+          );
+        },
       });
 
       // Reset pagination

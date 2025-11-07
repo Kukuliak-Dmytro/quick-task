@@ -19,6 +19,7 @@ export const revalidate = 30;
 //interface
 interface IProps {
   params: Promise<{ locale: Locale }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 //component
@@ -27,6 +28,7 @@ interface IProps {
  */
 export const PostsPage = async (props: IProps) => {
   const { locale } = await props.params;
+  const searchParams = await props.searchParams;
 
   // Validate locale
   if (!hasLocale(routing.locales, locale)) {
@@ -47,21 +49,31 @@ export const PostsPage = async (props: IProps) => {
     {},
   );
 
+  // Extract search query and page from URL params
+  const search =
+    typeof searchParams.search === "string" ? searchParams.search : "";
+  const page = parseInt(
+    typeof searchParams.page === "string" ? searchParams.page : "1",
+    10,
+  );
+
   // Prefetch based on variant
   if (listViewType === "infinite") {
     // Prefetch first page for infinite scroll
-    await queryClient.prefetchInfiniteQuery(postsInfiniteQueryOptions());
+    await queryClient.prefetchInfiniteQuery(
+      postsInfiniteQueryOptions({ search }),
+    );
   } else if (listViewType === "pagination") {
     // Prefetch first page for paginated variant
     await queryClient.prefetchQuery(
-      postsQueryOptions({ page: 1, limit: PAGINATION_LIMIT }),
+      postsQueryOptions({ page, limit: PAGINATION_LIMIT, search }),
     );
   }
 
   //return
   return (
     <PageContainer>
-      <PostsModule listViewType={listViewType} />
+      <PostsModule listViewType={listViewType} searchParams={searchParams} />
     </PageContainer>
   );
 };

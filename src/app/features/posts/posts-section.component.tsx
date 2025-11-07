@@ -11,6 +11,8 @@ import { PAGINATION_LIMIT } from "@/app/features/pagination/pagination.constants
 //interface
 interface IProps {
   listViewType: string;
+  search?: string;
+  page?: number;
 }
 
 //component
@@ -18,15 +20,17 @@ interface IProps {
  * PostsSection feature component.
  */
 export const PostsSection = async (props: IProps) => {
-  const { listViewType } = props;
+  const { listViewType, search = "", page = 1 } = props;
   const queryClient = getQueryClient();
 
   // Prefetch based on variant
   if (listViewType === "infinite") {
-    await queryClient.prefetchInfiniteQuery(postsInfiniteQueryOptions());
+    await queryClient.prefetchInfiniteQuery(
+      postsInfiniteQueryOptions({ search }),
+    );
   } else if (listViewType === "pagination") {
     await queryClient.prefetchQuery(
-      postsQueryOptions({ page: 1, limit: PAGINATION_LIMIT }),
+      postsQueryOptions({ page, limit: PAGINATION_LIMIT, search }),
     );
   }
 

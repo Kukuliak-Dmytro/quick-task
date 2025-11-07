@@ -52,10 +52,21 @@
   "posts_total": "Всього постів: {count}",
   "posts_load_error": "Помилка завантаження постів",
   "posts_empty": "Поки що немає постів. Створіть свій перший пост!",
+  "posts_empty_search": "Не знайдено постів для \"{query}\"",
   "posts_loading_more": "Завантаження більше постів...",
   "posts_load_more": "Завантажити більше постів",
   "pagination_previous": "Попередня",
   "pagination_next": "Наступна",
   "pagination_page": "Сторінка",
-  "pagination_of": "з"
+  "pagination_of": "з",
+  "search": {
+    "placeholder": "Пошук постів за заголовком...",
+    "button": "Пошук",
+    "searching": "Пошук...",
+    "clear": "Очистити",
+    "validation": {
+      "maxLength": "Пошуковий запит має бути не більше 100 символів",
+      "invalidCharacters": "Пошуковий запит містить недопустимі символи"
+    }
+  }
 }

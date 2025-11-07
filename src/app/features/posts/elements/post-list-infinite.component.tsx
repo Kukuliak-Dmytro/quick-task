@@ -7,14 +7,17 @@ import { PostCard } from "./post-card.component";
 import { PostCardSkeleton } from "./post-card-skeleton.component";
 import { Button } from "@/app/shared/components/ui/button";
 import { cn } from "@/app/shared/utils/utils";
+import { useSearchStore } from "@/app/features/search";
 import { renderList } from "../utils/render-list.utils";
 
 //component
 /**
- * PostListInfinite component for displaying posts with infinite scroll.
+ * PostListInfinite component for displaying posts with infinite scroll and search.
  */
 export const PostListInfinite = () => {
   const t = useTranslations();
+  const query = useSearchStore((state) => state.query);
+
   const {
     data,
     isLoading,
@@ -22,7 +25,7 @@ export const PostListInfinite = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useInfiniteQuery(postsInfiniteQueryOptions());
+  } = useInfiniteQuery(postsInfiniteQueryOptions({ search: query }));
 
   const allPosts = data?.pages.flatMap((page) => page.posts) ?? [];
 
@@ -82,7 +85,9 @@ export const PostListInfinite = () => {
       {allPosts.length === 0 ? (
         <div className="flex items-center justify-center min-h-[200px]">
           <div className="text-center">
-            <p className="text-muted-foreground text-lg">{t("posts_empty")}</p>
+            <p className="text-muted-foreground text-lg">
+              {query ? t("posts_empty_search", { query }) : t("posts_empty")}
+            </p>
           </div>
         </div>
       ) : (

@@ -1,35 +1,53 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { PAGINATION_LIMIT } from "./pagination.constants";
+import { useEffect } from "react";
 import { Button } from "@/app/shared/components/ui/button";
+import { usePaginationStore } from "./pagination.store";
 
 //interface
-interface PaginationComponentProps {
+interface IPaginationComponentProps {
   total: number;
-  page: number;
+  page?: number;
   limit?: number;
-  onPageChange?: (page: number) => void;
 }
 
 //component
-/**
- * Pagination component for navigating through paginated content.
- */
+/** Pagination component that uses the pagination store for page management. */
 export const PaginationComponent = ({
-  total,
-  page,
-  limit = PAGINATION_LIMIT,
-  onPageChange,
-}: PaginationComponentProps) => {
+  total: totalProp,
+  page: pageProp,
+  limit: limitProp,
+}: IPaginationComponentProps) => {
   const t = useTranslations();
-  const totalPages = Math.ceil(total / limit);
+
+  // Use pagination store for pagination state
+  const storePage = usePaginationStore((state) => state.page);
+  const storeLimit = usePaginationStore((state) => state.limit);
+  const storeTotal = usePaginationStore((state) => state.total);
+  const setPage = usePaginationStore((state) => state.setPage);
+  const setTotal = usePaginationStore((state) => state.setTotal);
+
+  // Use store values, fall back to props if store values are defaults
+  const page = storePage || pageProp || 1;
+  const limit = storeLimit || limitProp || 5;
+  const total = storeTotal || totalProp;
+
+  // Update total in store if prop is provided
+  useEffect(() => {
+    if (totalProp && storeTotal !== totalProp) {
+      setTotal(totalProp);
+    }
+  }, [totalProp, storeTotal, setTotal]);
 
   const handlePageChange = (newPage: number) => {
+    const totalPages = Math.ceil(total / limit);
     if (newPage >= 1 && newPage <= totalPages) {
-      onPageChange?.(newPage);
+      setPage(newPage);
     }
   };
+
+  const totalPages = Math.ceil(total / limit);
 
   if (totalPages <= 1) {
     return null;

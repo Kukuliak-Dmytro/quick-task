@@ -5,11 +5,12 @@ import { IPostsResponse } from "@/app/entities/models";
 export interface IGetPostsParams {
   page?: number;
   limit?: number;
+  search?: string;
 }
 
 //function
 /**
- * Fetches posts from the API with pagination support.
+ * Fetches posts from the API with pagination and search support.
  */
 export const getPosts = async (
   params?: IGetPostsParams,
@@ -22,6 +23,10 @@ export const getPosts = async (
 
   if (params?.limit) {
     searchParams.set("limit", params.limit.toString());
+  }
+
+  if (params?.search) {
+    searchParams.set("search", params.search);
   }
 
   const queryString = searchParams.toString();

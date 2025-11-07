@@ -1,34 +1,50 @@
 import { NextResponse } from "next/server";
 import { db, posts, user } from "@/pkg/libraries/drizzle";
-import { desc, eq, count } from "drizzle-orm";
+import { desc, eq, count, ilike } from "drizzle-orm";
 import { requireSession } from "../lib";
 
-//function
 /**
- * GET /api/posts - Fetches posts from the database with pagination support.
+ * GET /api/posts
+ * Fetches posts from the database with pagination support.
+ *
+ * This endpoint retrieves posts with pagination support, including author information
+ * via database joins. Requires authentication and supports query parameters for
+ * page and limit customization.
+ *
+ * @param request - The incoming request with search params for pagination
+ * @returns JSON response with posts array, pagination metadata, and total count
+ * @throws {401} Unauthorized if no valid session
+ * @throws {500} Internal server error if database operation fails
  */
-export const GET = async (request: Request) => {
+export async function GET(request: Request) {
   try {
     // Verify authentication
     const authResult = await requireSession(request);
     if (authResult instanceof NextResponse) {
-      //return
       return authResult;
     }
 
-    // Parse search params for pagination
+    // Parse search params for pagination and search
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "5");
+    const search = searchParams.get("search") || "";
     const offset = (page - 1) * limit;
 
-    // Get total count for pagination info
-    const [{ totalCount }] = await db
-      .select({ totalCount: count() })
-      .from(posts);
+    // Build search condition if search query is provided
+    const searchCondition = search
+      ? ilike(posts.title, `%${search}%`)
+      : undefined;
 
-    // Fetch paginated posts with author information via join
-    const paginatedPosts = await db
+    // Get total count for pagination info (with search filter if applicable)
+    const countQuery = db.select({ totalCount: count() }).from(posts);
+    if (searchCondition) {
+      countQuery.where(searchCondition);
+    }
+    const [{ totalCount }] = await countQuery;
+
+    // Fetch paginated posts with author information via join (with search filter if applicable)
+    const postsQuery = db
       .select({
         id: posts.id,
         title: posts.title,
@@ -49,12 +65,17 @@ export const GET = async (request: Request) => {
       .limit(limit)
       .offset(offset);
 
+    if (searchCondition) {
+      postsQuery.where(searchCondition);
+    }
+
+    const paginatedPosts = await postsQuery;
+
     // Calculate pagination metadata
     const totalPages = Math.ceil(totalCount / limit);
     const hasNextPage = page < totalPages;
     const hasPreviousPage = page > 1;
 
-    //return
     return NextResponse.json({
       posts: paginatedPosts,
       total: totalCount,
@@ -68,24 +89,32 @@ export const GET = async (request: Request) => {
     });
   } catch (error) {
     console.error("Error fetching posts:", error);
-    //return
     return NextResponse.json(
       { error: "Failed to fetch posts" },
       { status: 500 },
     );
   }
-};
+}
 
-//function
 /**
- * POST /api/posts - Creates a new post.
+ * POST /api/posts
+ * Creates a new post.
+ *
+ * This endpoint creates a new post with the provided title, content, and publication
+ * status. Requires authentication and validates required fields before creation.
+ * Returns the created post with author information.
+ *
+ * @param request - The incoming request with post data in JSON body
+ * @returns JSON response with the created post including author information
+ * @throws {401} Unauthorized if no valid session
+ * @throws {400} Bad request if required fields are missing
+ * @throws {500} Internal server error if database operation fails
  */
-export const POST = async (request: Request) => {
+export async function POST(request: Request) {
   try {
     // Verify authentication
     const authResult = await requireSession(request);
     if (authResult instanceof NextResponse) {
-      //return
       return authResult;
     }
     const { session } = authResult;
@@ -96,7 +125,6 @@ export const POST = async (request: Request) => {
 
     // Validate required fields
     if (!title || !content) {
-      //return
       return NextResponse.json(
         { error: "Title and content are required" },
         { status: 400 },
@@ -139,14 +167,12 @@ export const POST = async (request: Request) => {
       .where(eq(posts.id, newPost.id))
       .limit(1);
 
-    //return
     return NextResponse.json(postWithAuthor[0], { status: 201 });
   } catch (error) {
     console.error("Error creating post:", error);
-    //return
     return NextResponse.json(
       { error: "Failed to create post" },
       { status: 500 },
     );
   }
-};
+}

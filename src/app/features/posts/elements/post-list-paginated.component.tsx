@@ -6,37 +6,37 @@ import { useEffect } from "react";
 import { postsQueryOptions } from "@/app/entities/api";
 import { PostCard } from "./post-card.component";
 import { PostCardSkeleton } from "./post-card-skeleton.component";
-import {
-  usePaginationStore,
-  PaginationComponent,
-} from "@/app/features/pagination";
+import { PaginationComponent } from "@/app/features/pagination";
+import { useSearchStore } from "@/app/features/search";
+import { usePaginationStore } from "@/app/features/pagination/pagination.store";
 import { renderList } from "../utils/render-list.utils";
 
 //component
 /**
- * PostListPaginated component for displaying posts with pagination.
+ * PostListPaginated component for displaying posts with pagination and search.
  */
 export const PostListPaginated = () => {
   const t = useTranslations();
 
+  const query = useSearchStore((state) => state.query);
   const page = usePaginationStore((state) => state.page);
   const limit = usePaginationStore((state) => state.limit);
-  const setPage = usePaginationStore((state) => state.setPage);
   const setTotal = usePaginationStore((state) => state.setTotal);
 
   const { data, isLoading, error, isFetching } = useQuery(
-    postsQueryOptions({ page, limit }),
+    postsQueryOptions({ page, limit, search: query }),
   );
 
+  // Update total in store when data changes
   useEffect(() => {
-    if (data?.total) {
+    if (data?.total !== undefined) {
       setTotal(data.total);
     }
   }, [data?.total, setTotal]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [page]);
+  }, [page, query]);
   if (isLoading) {
     //return
     return (
@@ -102,7 +102,9 @@ export const PostListPaginated = () => {
       {!data?.posts || data.posts.length === 0 ? (
         <div className="flex items-center justify-center min-h-[200px]">
           <div className="text-center">
-            <p className="text-muted-foreground text-lg">{t("posts_empty")}</p>
+            <p className="text-muted-foreground text-lg">
+              {query ? t("posts_empty_search", { query }) : t("posts_empty")}
+            </p>
           </div>
         </div>
       ) : (
@@ -120,7 +122,6 @@ export const PostListPaginated = () => {
                 total={data.total}
                 page={page}
                 limit={limit}
-                onPageChange={setPage}
               />
             </div>
           )}
